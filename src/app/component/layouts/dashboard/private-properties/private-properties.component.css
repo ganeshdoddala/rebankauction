@@ -1,0 +1,9 @@
+.componentHead{
+    flex:auto;
+}
+.material-icons{
+    font-size: 16px;
+}
+.btn{
+    margin: auto 0.2em;
+}

@@ -1,0 +1,152 @@
+<div class="d-flex">
+<button class="btn btn-warning px-3 d-none d-lg-flex ml-auto p-2" (click)="loadBulkUpload()" *ngIf="!bulkUploadSection">Upload Bulk</button>
+</div>
+<form [formGroup]="auctionDetailsForm" (ngSubmit)="submitForm()" *ngIf="!bulkUploadSection">
+  <div class="form-row">
+    <h5>Organization/Bank Details</h5>
+    <div class="col-md-12 mb-3">
+      <label for="validationServer01">Title:</label>
+      <input type="text" class="form-control" id="validationServer01" placeholder="Title" formControlName="title" required>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label for="validationServer01">Organization/Bank Name:</label>
+      <input type="text" class="form-control" id="validationServer01" placeholder="Organization name" formControlName="organizationName" required>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label for="validationServer02">Branch:</label>
+      <input type="text" class="form-control" id="validationServer02" placeholder="Branch" formControlName="organizationBranch" required>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label>Type of Property:</label><br/>
+      <select class="custom-select" formControlName="propertyCategory">
+        <option *ngFor="let property of allPropertiesTypes" value="{{property.propertyType}}">{{property.propertyType}}</option>
+      </select>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label>Property Category</label><br/>
+      <select class="custom-select" formControlName="propertyCategory">
+        <option value="Immovable">Immovable</option>
+        <option value="movable">movable</option>
+      </select>
+    </div>
+    <div class="col-md-12 mb-3">
+      <label>Property Sub Category</label><br/>
+      <select class="custom-select" formControlName="propertySubCategory">
+        <option *ngFor="let sub of propertySubTypes" value="{{sub.propertySubCategory}}">{{sub.propertySubCategory}}</option>
+      </select>
+    </div>
+    <!-- <div class="col-md-4 mb-3">
+      <label>Property Sub Category:</label>
+      <input type="text" class="form-control" placeholder="Property Sub Category" formControlName="propertySubCategory" required>
+    </div> -->
+    <div class="col-md-4 mb-3">
+      <label for="validationServer05">Property Description:</label>
+      <textarea class="form-control" id="validationServer05" rows="3" formControlName="propertyDescription" required></textarea>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Borrower Name:</label>
+      <input type="text" class="form-control" placeholder="Borrower Name" formControlName="borrowerName" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Country:</label>
+      <select class="custom-select" formControlName="country">
+        <option value="india" Selected>India</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>State:</label>
+      <select class="form-control" formControlName="state" (change)="onStateChange($event)" [(ngModel)]="selectedState">
+        <option *ngFor="let state of stateNames" value="{{state.state_name_english}}">{{state.state_name_english}}</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>District:</label>
+      <select class="form-control" formControlName="district">
+        <option selected *ngIf="!selectedState">Select state</option>
+        <option *ngFor="let district of districNames" value="{{district.district_name_english}}">{{district.district_name_english}}</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Location:</label>
+      <input type="text" class="form-control" placeholder="location" formControlName="location" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Sale Type:</label>
+      <br>
+      <select class="form-control" formControlName="saleType">
+        <option value="auction">Auction</option>
+        <option value="private">Private</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Property Type:</label>
+      <br>
+      <select class="custom-select" formControlName="propertyType">
+        <option value="Aprartment">Apartment</option>
+        <option value="individual Building">Invidual Building</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Project Size:</label>
+      <input type="text" class="form-control" placeholder="1Acr" formControlName="projectSize" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Phone Number:</label>
+      <input type="number" class="form-control" placeholder="999999999" formControlName="phonenumber" required>
+    </div>
+    <!-- <div class="custom-file">
+      <label class="custom-file-label" for="customFile">Upload Property Images:</label>
+      <br />
+      <input type="file" class="custom-file-input" id="customFile">
+      <label class="custom-file-label" for="customFile">Choose file</label>
+    </div> -->
+  </div>
+  <div class="form-row">
+    <h5>Action Details</h5>
+
+    <div class="col-md-4 mb-3">
+      <label>Action ID:</label>
+      <input type="number" class="form-control" placeholder="ID" formControlName="auctionId" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Reserve Price:</label>
+      <input type="number" class="form-control" placeholder="Reserve Price" formControlName="reserveprice" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>EMD Amount:</label>
+      <input type="number" class="form-control" placeholder="EMD Amount" formControlName="emdAmount" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>EMD Submission:</label>
+      <input type="date" class="form-control" placeholder="EMD Submission" formControlName="emdSubmission" required>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label>Date and Time:</label>
+      <input type="date"  class="form-control" formControlName="auctiondatetime" required>
+    </div>
+  </div>
+  <div class="d-flex">
+  <button type="submit" class="btn btn-outline-success">Submit</button>
+  <button class="btn btn-outline-danger btn-cancel">Cancel</button>
+  <p>{{forResponse}}</p>
+  </div>
+</form>
+
+
+<div *ngIf="bulkUploadSection">
+  <p>Bulk Properties Upload</p>
+  <form [formGroup]="auctionDetailsUploadForm" id="auctionDetailsBulkUpload" (ngSubmit)="uploadExcel()">
+  <div class="form-row">
+    <div class="custom-file">
+      <label class="custom-file-label" for="file">Upload CSV File</label>
+      <input type="file" class="form-control" id="file" accept=".csv" (change)="onFileSelected($event)" >
+    </div>
+  <p class="text-danger">{{auctionDetailsUploadFormResponse}}</p>
+  </div>
+  
+  <div class="d-flex">
+  <button type="submit" class="btn btn-outline-success">Submit</button>
+  <button class="btn btn-outline-danger btn-cancel" (click)="auctionDetailsUploadFormCancel()">Cancel</button>
+  </div>
+</form>
+</div>

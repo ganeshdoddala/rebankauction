@@ -1,0 +1,31 @@
+<div class="form-row">
+<form [formGroup]="setingsForm" (ngSubmit)="submitForm()">
+        
+            <div class="col-md-4 mb-3">
+                <label>Admin Email</label>
+                <input type="email" class="form-control" placeholder="Email" formControlName="email" required>
+            </div>
+            
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+            <p>{{mailSetResponse}}</p>
+</form>
+</div>
+
+<div class="form-row">
+    <h6>List Property Types</h6>
+    <ul *ngIf="allPropertiesTypes">
+  <li *ngFor="let property of allPropertiesTypes">
+    {{ property.propertyType }}
+  </li>
+</ul>
+<form [formGroup]="addPropertyForm" (ngSubmit)="submitPropertyForm()">
+        
+            <div class="col-md-4 mb-3">
+                <label>Add New Property Type</label>
+                <input type="text" class="form-control" placeholder="Type" formControlName="propertyType" required>
+            </div>
+            
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+            <p>{{mailSetResponse}}</p>
+</form>
+        </div>

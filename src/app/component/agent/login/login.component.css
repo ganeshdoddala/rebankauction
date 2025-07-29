@@ -1,0 +1,65 @@
+.auth-wrapper[data-v-f72601b6] {
+    position: relative;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    margin-top: 50px;
+}
+
+.auth-box[data-v-f72601b6] {
+    width: 450px;
+    height: auto;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 60px #e0e0e0;
+    margin: auto;
+}
+
+.auth-view[data-v-f72601b6] {
+    margin: 10px 0;
+}
+
+.auth-view>.auth-input[data-v-f72601b6] {
+    text-align: left;
+    margin: 20px auto;
+    width: 100%;
+    font-size: 16px;
+    height: 50px;
+    border-color: rgba(14, 102, 39, .479);
+    border-width: 1px;
+    color: #000;
+}
+
+.auth-view>.auth-button[link][data-v-f72601b6] {
+    font-weight: 700;
+    text-align: left;
+    font-size: 14px;
+}
+
+.auth-view>.auth-button[data-v-f72601b6] {
+    display: block;
+    margin: 10px auto;
+    width: 100%;
+    height: 40px;
+}
+
+.auth-view>.auth-button[login][data-v-f72601b6] {
+    height: 60px;
+}
+
+.btn-success:not(:disabled):not(.disabled).active,
+.btn-success:not(:disabled):not(.disabled):active,
+.show>.btn-success.dropdown-toggle {
+    color: #fff;
+    background-color: #1e7e34;
+    border-color: #1c7430;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show>.btn-secondary.dropdown-toggle {
+    color: #fff;
+    background-color: #545b62;
+    border-color: #4e555b;
+}

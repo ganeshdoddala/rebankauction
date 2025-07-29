@@ -1,0 +1,103 @@
+
+
+        <!-- Header Start -->
+        <div class="container-fluid header bg-white p-0 mt-3">
+            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+                <div class="col-md-12 p-5 mt-lg-5">
+                    <h1 class="display-5 animated fadeIn mb-4">{{propertyDetails.title}}</h1> 
+                </div>
+                <div class="animated fadeIn p-5">
+                    <img class="img-fluid" [attr.src]="propertyDetails.imageUrl || defaultImage" alt="">
+                </div>
+           
+                <div class="col-1"></div>
+                <div class="col-xl-10 col-lg-10 wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">
+                    <div class="cs_single_property_content_wrapper cs_white_bg cs_radius_15">
+                    <div class="cs_single_property_text_wrapper">
+                        <h3 class="cs_fs_24 cs_semibold cs_body_font cs_mb_33">Description</h3>
+                        <div class="cs_property_description position-relative">
+                        <p>{{propertyDetails.propertyDescription}}</p>
+                        </div>
+                        <div class="cs_single_property_text_wrapper cs_border_top" *ngIf="propertyDetails.saleType === 'auction'">
+                            <p><b>Action Details</b></p>
+                            <ul class="cs_property_details_list">
+                            <li><span class="cs_property_details_title">Action ID:</span> {{propertyDetails.auctionId}}</li>
+                            <li><span class="cs_property_details_title">Action Date:</span> {{propertyDetails.auctiondatetime}}</li>
+                            <li><span class="cs_property_details_title">Price:</span> ${{propertyDetails.reserveprice}}</li>
+                            <li><span class="cs_property_details_title">EMD Amount:</span> {{propertyDetails.emdAmount}}</li>
+                            <li><span class="cs_property_details_title">EMD Submission:</span> {{propertyDetails.emdSubmission}}</li>
+                            <li><span class="cs_property_details_title">Bank Name:</span> {{propertyDetails.organizationName}}</li>
+                            <li><span class="cs_property_details_title">Bank Branch:</span> {{propertyDetails.organizationBranch}}</li>
+                            </ul>
+                            <p><b>Borrower Details</b></p>
+                            <ul class="cs_property_details_list">
+                            <li><span class="cs_property_details_title">Borrower Name:</span> {{propertyDetails.borrowerName}}</li>
+                            </ul>
+                            <p><b>Project Details</b></p>
+                            <ul class="cs_property_details_list">
+                            <li><span class="cs_property_details_title">Project Size:</span> {{propertyDetails.projectSize}}</li>
+                            <li><span class="cs_property_details_title">Property Type:</span> {{propertyDetails.propertyType}}</li>
+                            <li><span class="cs_property_details_title">Reserve Price:</span> {{propertyDetails.reserveprice}}</li>
+                            <li><span class="cs_property_details_title">Sale Type:</span> {{propertyDetails.saleType}}</li>
+                            </ul>
+                        </div>
+                        <div class="cs_single_property_text_wrapper cs_border_top" *ngIf="propertyDetails.saleType != 'auction'">
+                            <p><b>Seller Details</b></p>
+                            <ul class="cs_property_details_list">
+                            <li><span class="cs_property_details_title">Seller Name:</span> {{propertyDetails.borrowerName}}</li>
+                            </ul>
+                            <p><b>Project Details</b></p>
+                            <ul class="cs_property_details_list">
+                            <li><span class="cs_property_details_title">Project Size:</span> {{propertyDetails.projectSize}}</li>
+                            <li><span class="cs_property_details_title">Property Type:</span> {{propertyDetails.propertyType}}</li>
+                            <li><span class="cs_property_details_title">Reserve Price:</span> {{propertyDetails.reserveprice}}</li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <button aria-label="Click to show all text" class="btn btn-primary" (click)="InterestedFormselect()">Interested</button>
+                    </div>
+                    </div>
+                    <p *ngIf="formResponse">{{formResponse}}</p>
+                </div>
+                <div class="col-1"></div>
+                
+            <div class="row p-2">
+                <div class="col-1"></div>
+                <div class="col-xl-10 col-lg-8 wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;" *ngIf="InterestedFormVisibility">
+                    <form [formGroup]="leadform" (ngSubmit)="submitLeadForm()">
+                        <div class="row g-3">
+                                    <div class="col-md-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="name" placeholder="Your Name" formControlName="name">
+                                            <label for="name">Your Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" placeholder="Your Email" formControlName="email">
+                                            <label for="email">Your Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="phone" placeholder="Your Phone" formControlName="phoneNumber">
+                                            <label for="phone">Your Phone</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px" formControlName="message"></textarea>
+                                            <label for="message">Message</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Send Request</button>
+                                    </div>
+                                    
+                                </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Header End --> 

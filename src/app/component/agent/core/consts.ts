@@ -1,0 +1,36 @@
+export enum ApiMethod {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+  UPLOAD = 'UPLOAD'
+}
+
+export enum AuthEndPoints {
+  CURRENR_USER = 'v1/auth/me',
+  VERIFY_TOKEN = 'v1/verify-token',
+  LOGIN = 'v1/login',
+  LOGOUT_USER = 'v1/logout',
+  PROPERTIES = 'v1/properties',
+  AUCTION_PROPERTIES = 'v1/get-private-properties',
+  DEL_PROPERTIES = 'v1/properties/delete/{0}',
+  PRIVATE_PROPERTIES = 'v1/get-private-properties',
+  PROPERTIESBYID = 'v1/properties/{0}',
+  GET_PRIVATE = 'v1/private',
+  POST_PRIVATE = 'v1/private',
+  PUT_PRIVATE='v1/approve/{0}',
+  POST_EMAIL = 'v1/setadminemail',
+  AGENTS='v1/agents',
+  AGENTS_ID='v1/agent/{0}',
+  UPDATE_AGENTS='v1/agent/{0}',
+  PROPERY_TYPE='v1/addTypeofProperty',
+  PROPERTY_SUB = 'v1/propertySubCategory',
+  PROPERY_TYPE_COUNT ='v1/property-type-count',
+  STATE = 'v1/listStates',
+  PROPERTIES_QUERY = 'v1/properties/query',
+  CONTACT_FORM='v1/contactForm',
+  GET_STATE = 'https://api.data.gov.in/resource/a71e60f0-a21d-43de-a6c5-fa5d21600cdb',
+  GET_DISTRICT='https://api.data.gov.in/resource/37231365-78ba-44d5-ac22-3deec40b9197',
+  UPLOAD_BULKPROPERTIES='v1/bulkUpload',
+  DELETE_AGENT='v1/agent/delete/{0}'
+}

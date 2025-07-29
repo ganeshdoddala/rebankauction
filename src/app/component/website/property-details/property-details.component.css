@@ -1,0 +1,26 @@
+.cs_single_property_content_wrapper{
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.cs_single_property_content_wrapper h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+.cs_radius_15 {
+    border-radius: 15px;
+}
+
+.cs_white_bg {
+    background-color: var(--white-color);
+}
+.cs_single_property_text_wrapper .cs_read_more {
+    border: 0;
+    background-color: transparent;
+    color: var(--accent-color);
+    text-decoration: underline;
+    position: relative;
+    z-index: 1;
+}

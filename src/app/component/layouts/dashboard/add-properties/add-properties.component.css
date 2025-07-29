@@ -1,0 +1,28 @@
+.form-row{
+    border: 1px solid #454545;
+    margin: 0.3em auto;
+    padding: 0.6em;
+    border-radius: 0.2em;
+}
+.form-row h5{
+    font-size: 1em;
+    margin-bottom: 1em;
+}
+
+.form-row label{
+    font-size: 0.9em;
+}
+
+input,
+input::placeholder {
+    font-size: 0.9em;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.btn-cancel{
+    margin-left: 0.3em;
+}

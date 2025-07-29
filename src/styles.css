@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Berkshire+Swash&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Convergence&display=swap');
+@import '~@angular/cdk/overlay-prebuilt.css';
+.about-text,
+.convergence {
+    font-family: Convergence, sans-serif;
+}
+
+.profile-pic {
+    display: block;
+    margin: auto;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.profile-name {
+    padding: 10px 0;
+    text-align: center;
+    font-weight: 700;
+}
+
+.profile-info {
+    margin: 0;
+    text-align: center;
+}
+
+/* body{
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none; 
+              user-select: none; 
+  } */

@@ -1,0 +1,36 @@
+<div class="d-flex">
+<h2 class="componentHead">Property List</h2>
+<button class="btn btn-outline-success px-3 d-none d-lg-flex ml-auto p-2" routerLink="/dashboard/addproperties">Add Properties</button>
+</div>
+
+
+<table class="table table-striped" *ngIf="allProperties">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Location</th>
+      <th scope="col">Area</th>
+      <th scope="col">Bank Name</th>
+      <th scope="col">Action ID</th>
+      <th scope="col">Action Date</th>
+      <th scope="col">Sale Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let property of allProperties">
+      <th scope="row">{{property.title}}</th>
+      <td>{{property.location}}, {{property.district}}, {{property.state}}</td>
+      <td>{{property.projectSize}}</td>
+      <td>{{property.organizationName}}, {{property.organizationBranch}}</td>
+      <td>{{property.auctionId}}</td>
+      <td>{{property.auctiondatetime}}</td>
+      <td>{{property.saleType}}</td>
+      <td><button class="btn btn-outline-primary" (click)="viewProperty(property._id)"><span class="material-icons">
+open_in_new
+</span></button></td>
+      <td><button class="btn btn-outline-danger" (click)="delProperty(property._id)"><span class="material-icons">
+delete
+</span></button></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,26 @@
+<div class="sidenav-main">
+  <div class="sidenav-header bg-light">
+    <!-- <img
+      class="avatar bdrs-50p"
+      [ngClass]="isSideNavOpen ? 'big-img' : 'small-img'"
+      src="{{ userProfileImage }}"
+      alt=""
+    /> -->
+    <div class="header-text" [class.hide-header-text]="!isSideNavOpen">
+      <h2>{{ fullname }}</h2>
+      <!-- <p>{{ email }}</p> -->
+    </div>
+  </div>
+  <!-- <mat-nav-list>
+    <a
+      mat-list-item
+      routerLink="{{ item.path }}"
+      *ngFor="let item of menuItems"
+      class="menu-item"
+    >
+      <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+      <span matListItemTitle *ngIf="isSideNavOpen">{{ item.name }}</span>
+    </a>
+
+  </mat-nav-list> -->
+</div>

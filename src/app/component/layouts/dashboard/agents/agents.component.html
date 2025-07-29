@@ -1,0 +1,87 @@
+
+<div *ngIf="viewAgentblock">
+<div class="d-flex">
+<h2 class="componentHead">Agents</h2>
+<button class="btn btn-outline-success px-3 d-none d-lg-flex ml-auto p-2" (click)="viewAgent()">Add Agent</button>
+</div>
+
+<div class="container mt-4">
+  <h4>Agent List</h4>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Agent Name</th>
+        <th>Email ID</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let agent of allAgents">
+        <td>{{ agent.name }}</td>
+        <td>{{ agent.email }}</td>
+        <td>{{ agent.location }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary me-2" (click)="editAgent(agent._id)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteAgent(agent._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div *ngIf="addAgentblock">
+    <h2 class="componentHead">Add Agent</h2>
+
+    <form [formGroup]="agentDetailsForm" (ngSubmit)="submitForm()">
+        <div class="form-row">
+            <h5>Agent Details</h5>
+            <div class="col-md-12 mb-3">
+                <label>Agent Name</label>
+                <input type="text" class="form-control" placeholder="Full Name" formControlName="agentName" required>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Email" formControlName="email" required>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label>Location</label>
+                <input type="email" class="form-control" placeholder="Location" formControlName="location" required>
+            </div>
+        </div>
+        <div class="d-flex">
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+            <button class="btn btn-outline-danger btn-cancel" (click)="cancel()">clear</button>
+        </div>
+        <p>{{agentUploadRes}}</p>
+    </form>
+</div>
+
+
+
+<div *ngIf="updateAgentblock">
+    <h2 class="componentHead">Update Agent</h2>
+
+    <form [formGroup]="editAgentDetailsForm" (ngSubmit)="submitEditAgentForm()">
+        <div class="form-row">
+            <h5>Agent Details</h5>
+            <div class="col-md-12 mb-3">
+                <label>Agent Name</label>
+                <input type="text" class="form-control" placeholder="Full Name" formControlName="agentName" required>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Email" formControlName="email" required>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label>Location</label>
+                <input type="email" class="form-control" placeholder="Location" formControlName="location" required>
+            </div>
+        </div>
+        <div class="d-flex">
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+            <button class="btn btn-outline-danger btn-cancel" (click)="cancel()">clear</button>
+        </div>
+    </form>
+</div>

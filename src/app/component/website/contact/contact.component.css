@@ -1,0 +1,11 @@
+.profile-pic {
+    display: block;
+    margin: auto;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+.council-member {
+    border: none;
+}
