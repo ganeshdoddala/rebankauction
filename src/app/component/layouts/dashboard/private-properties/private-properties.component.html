@@ -35,26 +35,26 @@ delete
     <form [formGroup]="PPDetailsForm" (ngSubmit)="addProperty()">
   <div class="form-row">
     <h5>Add</h5>
-    <div class="col-md-12 mb-3">
+    <div class="col-md-4 mb-3">
       <label for="validationServer01">Title:</label>
       <input type="text" class="form-control" id="validationServer01" placeholder="Title" formControlName="title" required>
     </div>
-    <div class="col-md-12 mb-3">
+    <div class="col-md-4 mb-3">
       <label>Type of Property:</label><br/>
-      <select class="custom-select" formControlName="propertyCategory">
+      <select class="custom-select form-control" formControlName="propertyCategory">
         <option *ngFor="let property of allPropertiesTypes" value="{{property.propertyType}}">{{property.propertyType}}</option>
       </select>
     </div>
-    <div class="col-md-12 mb-3">
+    <div class="col-md-4 mb-3">
       <label>Property Category</label><br/>
-      <select class="custom-select" formControlName="propertyCategory">
+      <select class="custom-select form-control" formControlName="propertyCategory">
         <option value="Immovable">Immovable</option>
         <option value="movable">movable</option>
       </select>
     </div>
-    <div class="col-md-12 mb-3">
+    <div class="col-md-4 mb-3">
       <label>Property Sub Category</label><br/>
-      <select class="custom-select" formControlName="propertySubCategory">
+      <select class="custom-select form-control" formControlName="propertySubCategory">
         <option *ngFor="let sub of propertySubTypes" value="{{sub.propertySubCategory}}">{{sub.propertySubCategory}}</option>
       </select>
     </div>
@@ -72,7 +72,7 @@ delete
     </div>
     <div class="col-md-4 mb-3">
       <label>Country:</label>
-      <select class="custom-select" formControlName="country">
+      <select class="custom-select form-control" formControlName="country">
         <option value="india" Selected>India</option>
       </select>
     </div>
@@ -103,7 +103,7 @@ delete
     <div class="col-md-4 mb-3">
       <label>Property Type:</label>
       <br>
-      <select class="custom-select" formControlName="propertyType">
+      <select class="custom-select form-control" formControlName="propertyType">
         <option value="Aprartment">Apartment</option>
         <option value="individual Building">Invidual Building</option>
       </select>

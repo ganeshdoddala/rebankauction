@@ -172,7 +172,7 @@ export class PrivatePropertiesComponent {
       state: new FormControl('', Validators.required),
       district: new FormControl('', Validators.required),
       location: new FormControl('', Validators.required),
-      saleType: new FormControl('', Validators.required),
+      saleType: new FormControl('private', Validators.required),
       propertyType: new FormControl('', Validators.required),
       projectSize: new FormControl('', Validators.required),
       phonenumber: new FormControl('', Validators.required),

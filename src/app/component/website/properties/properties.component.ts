@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { AuthEndPoints } from '../../agent/core/consts';
 import { state } from '@angular/animations';
 import { OrderByPipe } from 'src/app/component/agent/core/util/util.service';
-
+declare var bootstrap: any;
 @Component({
   selector: 'app-properties',
   templateUrl: './properties.component.html',
@@ -24,8 +24,11 @@ export class PropertiesComponent implements OnInit {
   nullProperties:any = null;
   districtNames:any;
   selectedState:any = "";
+  propertyDetails:any;
+  showSuccess = false;
   constructor( private _properties: PropertiesService,private _settings: SettingsService,private _agent: AgentsService,
-        private _storage:StorageService, private _router: Router,private _propery: PropertiesService, private http:HttpClient, private orderByPipe: OrderByPipe) { 
+        private _storage:StorageService, private _router: Router,private _propery: PropertiesService, private http:HttpClient, 
+        private orderByPipe: OrderByPipe, private _service:SettingsService) { 
         this._properties.getProperties()?.subscribe({
           next: (res: any) => {
             console.log(res)
@@ -114,7 +117,73 @@ submitForm() {
     const whatsappUrl = `https://wa.me/918277133999?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   }
-  requestCallback() { 
-    
+
+
+  selectedProperty:any | null = null;
+  userDetails = {
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  };
+  
+  openModal(property: Property): void {
+    this.selectedProperty = property;
+    console.log('Selected Property:', property);
+    this.userDetails = { name: '', email: '', phone: '', message: '' };
+    const modal = document.getElementById('interestModal');
+    if (modal) {
+      const bsModal = new bootstrap.Modal(modal);
+      bsModal.show();
+    }
   }
+  closeModal(): void {
+  const modalElement = document.getElementById('interestModal');
+  if (modalElement) {
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    modalInstance?.hide();
+  }
+}
+  getPropertyDetails(id: string): void {this._properties.getPropertyDetails(id)?.subscribe({
+          next: (res: any) => {
+            console.log(res)
+            this.propertyDetails=res;
+          }
+        })
+      }
+
+  submitInterest() {
+    if (!this.selectedProperty) return;
+    if (this.leadform.valid) {
+      var payload:any = this.leadform.value;
+      payload.property = this.selectedProperty;
+      this._service.sendContactForm(payload)?.subscribe({
+          next: (res: any) => {
+            if(res){
+            this.leadform.reset();
+            this.closeModal();
+            this.selectedProperty = null;
+            // Auto-hide after 5 seconds
+            setTimeout(() => this.showSuccess = false, 5000);
+            }
+          }
+        })
+    } else {
+      console.log('Lead form is invalid');
+    }
+  }
+leadform = new FormGroup({
+        name: new FormControl('', Validators.required),
+        phoneNumber: new FormControl('', Validators.required),
+        email: new FormControl('', Validators.required),
+        message: new FormControl(''),
+  })
+
+}
+
+export interface Property {
+  id: string;
+  name: string;
+  location: string;
+  price: number;
 }

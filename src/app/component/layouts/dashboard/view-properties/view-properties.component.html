@@ -18,11 +18,11 @@
   </thead>
   <tbody>
     <tr *ngFor="let property of allProperties">
-      <th scope="row">{{property.title}}</th>
+      <td scope="row">{{property.auctionId}}</td>
+      <th>{{property.title}}</th>
       <td>{{property.location}}, {{property.district}}, {{property.state}}</td>
       <td>{{property.projectSize}}</td>
       <td>{{property.organizationName}}, {{property.organizationBranch}}</td>
-      <td>{{property.auctionId}}</td>
       <td>{{property.auctiondatetime}}</td>
       <td>{{property.saleType}}</td>
       <td><button class="btn btn-outline-primary" (click)="viewProperty(property._id)"><span class="material-icons">

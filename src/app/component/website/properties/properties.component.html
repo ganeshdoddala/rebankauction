@@ -92,26 +92,27 @@
                             <table class="table table-striped" *ngIf="allProperties">
                                 <thead>
                                     <tr>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Sale Type</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Area</th>
-                                    <th scope="col">Bank Name</th>
                                     <th scope="col">Action ID</th>
+                                    <th scope="col">Sale Type</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Reserve Price</th>
+                                    <th scope="col">EMD AMOUNT </th>
+                                    <th scope="col"> EMD Submission</th>
                                     <th scope="col">Action Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let property of allProperties">
-                                        <th scope="row">{{property.title | uppercase}}</th>
+                                        <td scope="row">{{property.auctionId || '-'}}</td>
                                         <td>{{property.saleType | uppercase }}</td>
-                                        <td>{{property.location}}, {{property.district}}, {{property.state}}</td>
-                                        <td>{{property.projectSize}}</td>
-                                        <td>{{ property.organizationName || 'N/A' }}, {{ property.organizationBranch}}</td>
-                                        <td>{{property.auctionId || '-'}}</td>
+                                        <th>{{property.title | uppercase}}</th>
+                                        <td>{{property.reserveprice}}</td>
+                                        <td>{{property.emdAmount || '-'}} </td>
+                                        <td> {{property.emdSubmission || '-'}}</td>
                                         <td>{{property.auctiondatetime|| '-'}}</td>
                                         <td><button class="btn btn-outline-primary" (click)="shareWhatsapp(property)"><i class="bi bi-whatsapp"></i></button></td>
-                                        <td><button class="btn btn-outline-primary" (click)="viewProperty(property._id)">View</button></td>
+                                        <td><button class="btn btn-outline-primary" (click)="openModal(property)">Interested</button></td>
+                                        <!-- <td><button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Open first modal</button></td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -145,3 +146,56 @@
             </div>
         </div>
         <!-- Call to Action End -->
+ 
+
+  <div class="modal fade" id="interestModal" tabindex="-1" aria-labelledby="interestModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="interestModalLabel">
+          Interested in {{ selectedProperty?.title || '-'}}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="leadform" (ngSubmit)="submitInterest()">
+                        <div class="row g-3">
+                                    <div class="col-md-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="name" placeholder="Your Name" formControlName="name">
+                                            <label for="name">Your Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" placeholder="Your Email" formControlName="email">
+                                            <label for="email">Your Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="phone" placeholder="Your Phone" formControlName="phoneNumber">
+                                            <label for="phone">Your Phone</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px" formControlName="message"></textarea>
+                                            <label for="message">Message</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Send Request</button>
+                                    </div>
+                                    
+                                </div>
+                    </form>
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+            
