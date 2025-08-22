@@ -26,23 +26,37 @@ export class PropertiesComponent implements OnInit {
   selectedState:any = "";
   propertyDetails:any;
   showSuccess = false;
+  isSubmitting: boolean = false;
   constructor( private _properties: PropertiesService,private _settings: SettingsService,private _agent: AgentsService,
         private _storage:StorageService, private _router: Router,private _propery: PropertiesService, private http:HttpClient, 
         private orderByPipe: OrderByPipe, private _service:SettingsService) { 
-        this._properties.getProperties()?.subscribe({
-          next: (res: any) => {
-            console.log(res)
-            this.allProperties=res;
-          }
-        })
-        this._settings.getPropertyType()?.subscribe({
-            next: (res: any) => {
-              console.log(res)
-              this.allPropertiesTypes=Object.values(res);
-            }
-          })
+        this.getallProperties();
+        this.getPropertyTypes();
+        this.getstatesNames();
+  }
 
-          let params = new HttpParams();
+  ngOnInit(): void {
+  }
+
+  getPropertyTypes() {
+    this._settings.getPropertyType()?.subscribe({
+      next: (res: any) => {
+        console.log(res)
+        this.allPropertiesTypes=Object.values(res);
+      }
+    })
+  }
+
+  getallProperties(){
+    this._properties.getProperties()?.subscribe({
+      next: (res: any) => {
+        console.log(res)
+        this.allProperties=res;
+      }
+    })
+  }
+  getstatesNames() {
+    let params = new HttpParams();
             params = params.set('api-key', environment.stateanddistrictsapiKkey);
             params = params.set('format', "json");
             params = params.set('limit', 100);
@@ -56,15 +70,17 @@ export class PropertiesComponent implements OnInit {
             })
   }
 
-  ngOnInit(): void {
-  }
-
   searchForm = new FormGroup({
       keyword: new FormControl(''),
       state: new FormControl(''),
       district: new FormControl(''),
       property_type: new FormControl('')
   })
+
+  searchFormreset(){
+    this.searchForm.reset();
+    this.getallProperties();
+  }
 
 onStateChange(event:Event){
     console.log(this.selectedState)
@@ -128,6 +144,7 @@ submitForm() {
   };
   
   openModal(property: Property): void {
+    this.isSubmitting = false;
     this.selectedProperty = property;
     console.log('Selected Property:', property);
     this.userDetails = { name: '', email: '', phone: '', message: '' };
@@ -153,6 +170,7 @@ submitForm() {
       }
 
   submitInterest() {
+    this.isSubmitting = true;
     if (!this.selectedProperty) return;
     if (this.leadform.valid) {
       var payload:any = this.leadform.value;

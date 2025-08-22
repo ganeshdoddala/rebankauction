@@ -25,6 +25,7 @@ export class AddPropertiesComponent {
   bulkUploadSection:boolean = false;
   auctionDetailsUploadFormResponse:String | undefined;
   fileToUpload: File | null = null;
+  isauctionDetailsSubmitting: boolean = false;
   constructor(private _settings: SettingsService,private _agent: AgentsService,
       private _storage:StorageService, private _router: Router,private _propery: PropertiesService, private http:HttpClient){
     }
@@ -81,6 +82,7 @@ auctionDetailsForm = new FormGroup({
   });
 
   submitForm() {
+    this.isauctionDetailsSubmitting = true;
     console.log(this.auctionDetailsForm.value);
     var payload:any = this.auctionDetailsForm.value;
     payload.createdBy = this._storage.getLocalvalue('user_type');

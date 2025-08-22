@@ -19,7 +19,7 @@
   <tbody>
     <tr *ngFor="let property of allProperties">
       <td scope="row">{{property.auctionId}}</td>
-      <th>{{property.title}}</th>
+      <th><a (click)="viewProperty(property._id)">{{property.title}}</a></th>
       <td>{{property.location}}, {{property.district}}, {{property.state}}</td>
       <td>{{property.projectSize}}</td>
       <td>{{property.organizationName}}, {{property.organizationBranch}}</td>

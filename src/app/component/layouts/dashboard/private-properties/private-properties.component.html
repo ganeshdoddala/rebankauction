@@ -125,7 +125,7 @@ delete
       <input type="number" class="form-control" placeholder="Reserve Price" formControlName="reserveprice" required>
     </div>
   <div class="d-flex">
-  <button type="submit" class="btn btn-outline-success">Submit</button>
+  <button type="submit" class="btn btn-outline-success" [disabled]="isPrivatePropertySubmitting" >Submit</button>
   <button class="btn btn-outline-danger btn-cancel">Cancel</button>
   </div>
 </form>

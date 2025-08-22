@@ -20,7 +20,7 @@ export class PrivatePropertiesComponent {
   viewPrivateProperties:boolean =true;
   addPrivateProperties:boolean =false;
   viewadminApprovals:boolean =false;
-
+  isPrivatePropertySubmitting:boolean =false;
   allPropertiesTypes:any;
   propertySubTypes:any;
   stateNames:any;
@@ -91,8 +91,10 @@ export class PrivatePropertiesComponent {
     this.viewPrivateProperties=false;
     this.addPrivateProperties =true;
     this.viewadminApprovals =false;
+    this.isPrivatePropertySubmitting = false;
   }
   addProperty(){
+    this.isPrivatePropertySubmitting = true;
     console.log(this.PPDetailsForm.value)
     var payload:any = this.PPDetailsForm.value;
     payload.createdBy = this._storage.getLocalvalue('user_type');
