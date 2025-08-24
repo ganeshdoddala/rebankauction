@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { PropertiesService } from '../../services/properties/properties.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../../agent/core/storage/storage.service';
@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { AuthEndPoints } from '../../agent/core/consts';
 import { state } from '@angular/animations';
 import { OrderByPipe } from 'src/app/component/agent/core/util/util.service';
+import { DatePipe } from '@angular/common';
 declare var bootstrap: any;
 @Component({
   selector: 'app-properties',
@@ -34,6 +35,7 @@ export class PropertiesComponent implements OnInit {
         this.getPropertyTypes();
         this.getstatesNames();
   }
+  
 
   ngOnInit(): void {
   }
@@ -155,12 +157,12 @@ submitForm() {
     }
   }
   closeModal(): void {
-  const modalElement = document.getElementById('interestModal');
-  if (modalElement) {
-    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-    modalInstance?.hide();
+    const modalElement = document.getElementById('interestModal');
+    if (modalElement) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      modalInstance?.hide();
+    }
   }
-}
   getPropertyDetails(id: string): void {this._properties.getPropertyDetails(id)?.subscribe({
           next: (res: any) => {
             console.log(res)
@@ -204,4 +206,25 @@ export interface Property {
   name: string;
   location: string;
   price: number;
+}
+@Pipe({ name: 'safeDate' })
+export class SafeDatePipe implements PipeTransform {
+  transform(value: any, format: string = 'dd-MM-yyyy hh:mm:ss a'): string {
+    if (!value) return '-';
+
+    let date: Date;
+    if (typeof value === 'string' && value.includes('-')) {
+      const parts = value.split('-');
+      if (parts.length === 3 && parts[0].length === 2) {
+        const [day, month, year] = parts;
+        date = new Date(`${year}-${month}-${day}`);
+      } else {
+        date = new Date(value);
+      }
+    } else {
+      date = new Date(value);
+    }
+
+    return isNaN(date.getTime()) ? '-' : new DatePipe('en-US').transform(date, format) || '-';
+  }
 }

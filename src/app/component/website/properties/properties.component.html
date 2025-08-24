@@ -109,8 +109,8 @@
                                         <th>{{property.title | uppercase}}</th>
                                         <td>{{property.reserveprice}}</td>
                                         <td>{{property.emdAmount || '-'}} </td>
-                                        <td> {{property.emdSubmission || '-'}}</td>
-                                        <td>{{property.auctiondatetime|| '-'}}</td>
+                                        <td>{{property.emdSubmission | safeDate}}</td>
+                                        <td>{{property.auctiondatetime | safeDate}}</td>
                                         <td><button class="btn btn-outline-primary" (click)="shareWhatsapp(property)"><i class="bi bi-whatsapp"></i></button></td>
                                         
                                         <td><button class="btn btn-outline-primary" (click)="openModal(property)">Interested</button></td>

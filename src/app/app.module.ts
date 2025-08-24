@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, SafeDatePipe } from './app.component';
 import { HomeComponent } from './component/website/home/home.component';
 import { HeaderComponent } from './component/website/header/header.component';
 import { FooterComponent } from './component/website/footer/footer.component';
@@ -30,7 +30,8 @@ import { PropertyDetailsComponent } from './component/website/property-details/p
     HeaderComponent,
     PropertiesComponent,
     LoginComponent,
-    PropertyDetailsComponent
+    PropertyDetailsComponent,
+    SafeDatePipe
   ],
   imports: [
     BrowserModule,
@@ -51,6 +52,7 @@ import { PropertyDetailsComponent } from './component/website/property-details/p
       }
     }
   ],
+  exports: [SafeDatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
