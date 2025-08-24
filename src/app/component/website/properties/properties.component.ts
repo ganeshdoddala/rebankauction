@@ -177,7 +177,7 @@ submitForm() {
     if (this.leadform.valid) {
       var payload:any = this.leadform.value;
       payload.property = this.selectedProperty;
-      this._service.sendContactForm(payload)?.subscribe({
+      this._service.sendEnquiryForm(payload)?.subscribe({
           next: (res: any) => {
             if(res){
             this.leadform.reset();

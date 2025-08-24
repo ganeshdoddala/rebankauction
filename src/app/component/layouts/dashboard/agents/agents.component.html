@@ -13,14 +13,16 @@
         <th>Agent Name</th>
         <th>Email ID</th>
         <th>Location</th>
+        <th>Role</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let agent of allAgents">
-        <td>{{ agent.name }}</td>
+        <td>{{ agent.agentName }}</td>
         <td>{{ agent.email }}</td>
         <td>{{ agent.location }}</td>
+        <td>{{ agent.role }}</td>
         <td>
           <button class="btn btn-sm btn-primary me-2" (click)="editAgent(agent._id)" title="Edit Agent">Edit</button>
           <button class="btn btn-sm btn-danger" (click)="deleteAgent(agent._id)">Delete</button>
@@ -49,11 +51,19 @@
                 <label>Location</label>
                 <input type="text" class="form-control" placeholder="Location" formControlName="location" required>
             </div>
+            <div class="col-md-12 mb-3">
+              <label>Role</label>
+                <select class="form-select" formControlName="role" required>
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="agent">Agent</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
         </div>
         <div class="d-flex">
             <button type="submit" class="btn btn-outline-success" [disabled]="agentDetailsForm.invalid">
-    {{ isagentDetailsFormSubmitting ? 'Submitting...' : 'Submit' }}
-  </button>
+              {{ isagentDetailsFormSubmitting ? 'Submitting...' : 'Submit' }}
+            </button>
             <button class="btn btn-outline-danger btn-cancel" (click)="cancel()">cancel</button>
         </div>
        <p class="text-success mt-2" *ngIf="addAgentRes">{{ addAgentRes }}</p>
@@ -81,10 +91,18 @@
                 <label>Location</label>
                 <input type="text" class="form-control" placeholder="Location" formControlName="location" required>
             </div>
+            <div class="col-md-12 mb-3">
+              <label>Role</label>
+                <select class="form-select" formControlName="role" required>
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="agent">Agent</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
         </div>
         <div class="d-flex">
-            <button type="submit" class="btn btn-outline-success" [disabled]="agentDetailsForm.invalid">
-    {{ isagentDetailsFormSubmitting ? 'Submitting...' : 'Submit' }}
+            <button type="submit" class="btn btn-outline-success" [disabled]="editAgentDetailsForm.invalid">
+    {{ iseditAgentDetailsForm ? 'Submitting...' : 'Submit' }}
   </button>
             <button class="btn btn-outline-danger btn-cancel" (click)="cancel()">cancel</button>
         </div>

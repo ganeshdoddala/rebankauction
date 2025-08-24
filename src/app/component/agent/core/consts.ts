@@ -31,6 +31,7 @@ export enum AuthEndPoints {
   STATE = 'v1/listStates',
   PROPERTIES_QUERY = 'v1/properties/query',
   CONTACT_FORM='v1/contactForm',
+  ENQUIRY_FORM='v1/enquiryForm',
   GET_STATE = 'https://api.data.gov.in/resource/a71e60f0-a21d-43de-a6c5-fa5d21600cdb',
   GET_DISTRICT='https://api.data.gov.in/resource/37231365-78ba-44d5-ac22-3deec40b9197',
   UPLOAD_BULKPROPERTIES='v1/bulkUpload',

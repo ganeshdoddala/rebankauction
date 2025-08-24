@@ -17,6 +17,7 @@ export class AgentsComponent {
   viewAgentblock:boolean = true;
   updateAgentblock:boolean = false;
   isagentDetailsFormSubmitting:boolean = false;
+  iseditAgentDetailsForm:boolean = false;
   constructor(
     private _agent: AgentsService,
     private _storage:StorageService,
@@ -48,6 +49,7 @@ export class AgentsComponent {
       agentName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       location: new FormControl('', Validators.required),
+      role: new FormControl('', Validators.required)
     }
   );
 
@@ -56,6 +58,7 @@ export class AgentsComponent {
       agentName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       location: new FormControl('', Validators.required),
+      role: new FormControl('', Validators.required)
     }
   );
 
@@ -69,7 +72,7 @@ export class AgentsComponent {
 
       const payload = {
         ...this.agentDetailsForm.value,
-        createdBy: this._storage.getLocalvalue('user_type')
+        createdBy: this._storage.getLocalvalue('user_type'),
       };
 
       this._agent.postAgents(payload)?.subscribe({
@@ -81,6 +84,7 @@ export class AgentsComponent {
           this.addAgentblock = false;
           this.isagentDetailsFormSubmitting = false;
           this.getAgents();
+          this.addAgentRes = '';
         },
         error: (err: any) => {
           console.error('Error adding agent:', err);
@@ -100,7 +104,7 @@ export class AgentsComponent {
             console.log(res)
             this.editAgentDetailsForm.patchValue({
               id:res._id,
-              agentName:res.name,
+              agentName:res.agentName,
               email: res.email,
               location: res.location,
             })
@@ -109,6 +113,7 @@ export class AgentsComponent {
     }
 
     submitEditAgentForm(){
+      this.iseditAgentDetailsForm = true;
       console.log(this.editAgentDetailsForm.value)
       var payload:any = this.editAgentDetailsForm.value;
       payload.updatedBy = this._storage.getLocalvalue('user_type');
@@ -118,6 +123,7 @@ export class AgentsComponent {
             this.addAgentblock = false;
             this.viewAgentblock = true;
             this.updateAgentblock = false;
+            this.iseditAgentDetailsForm = false;
           }
         })
     }

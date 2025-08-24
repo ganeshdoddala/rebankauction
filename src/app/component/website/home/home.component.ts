@@ -84,38 +84,30 @@ export class HomeComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getstates();
 		this.getPropertyTypes();
-		let params = new HttpParams();
-		params = params.set('api-key', environment.stateanddistrictsapiKkey);
-		params = params.set('format', "json");
-		params = params.set('limit', 100);
-		this.http.get(AuthEndPoints.GET_STATE, {
-			params
-		})?.subscribe({
-			next: (res: any) => {
-				console.log(res.records)
-				this.stateNames = res.records.sort((a: any, b: any) =>
-					a.state_name_english.localeCompare(b.state_name_english)
-				);
-			}
-		})
+		this.getstatesNames();
 	}
+
+  getstatesNames() {
+    let params = new HttpParams();
+            params = params.set('api-key', environment.stateanddistrictsapiKkey);
+            params = params.set('format', "json");
+            params = params.set('limit', 100);
+            this.http.get(AuthEndPoints.GET_STATE, { params })?.subscribe({
+                  next: (res: any) => {
+                    console.log(res.records)
+                    this.stateNames = res.records.sort((a:any, b:any) =>
+                      a.state_name_english.localeCompare(b.state_name_english)
+                    );  
+                  }
+            })
+  }
 
 	getPropertyTypes() {
 		this._settings.getPropertyType()?.subscribe({
 			next: (res: any) => {
 				console.log(res)
 				this.allPropertiesTypes = Object.values(res).slice(0, 10);
-			}
-		})
-	}
-
-	getstates() {
-		this._settings.getSates()?.subscribe({
-			next: (res: any) => {
-				console.log(res[0].states)
-				this.stateNames = res[0].states
 			}
 		})
 	}
@@ -200,7 +192,7 @@ export class HomeComponent implements OnInit {
 	}
 
 
-	selectedProperty: any | null = null;
+	selectedProperty: any = {};
 	userDetails = {
 		name: '',
 		email: '',
@@ -239,25 +231,26 @@ export class HomeComponent implements OnInit {
 
 	submitInterest() {
     this.isSubmitting = true;
-		if (!this.selectedProperty) return;
-		if (this.leadform.valid) {
-			var payload: any = this.leadform.value;
-			payload.property = this.selectedProperty;
-			this._service.sendContactForm(payload)?.subscribe({
-				next: (res: any) => {
-					if (res) {
-						this.leadform.reset();
-						this.closeModal();
-						this.selectedProperty = null;
-						// Auto-hide after 5 seconds
-						setTimeout(() => this.showSuccess = false, 5000);
-					}
-				}
-			})
-		} else {
-			console.log('Lead form is invalid');
-		}
-	}
+    if (!this.selectedProperty) return;
+    if (this.leadform.valid) {
+      var payload:any = this.leadform.value;
+      payload.property = this.selectedProperty;
+      this._service.sendEnquiryForm(payload)?.subscribe({
+          next: (res: any) => {
+            if(res){
+            this.leadform.reset();
+            this.closeModal();
+            this.selectedProperty = null;
+            // Auto-hide after 5 seconds
+            setTimeout(() => this.showSuccess = false, 5000);
+            }
+          }
+        })
+    } else {
+      console.log('Lead form is invalid');
+    }
+  }
+
 	leadform = new FormGroup({
 		name: new FormControl('', Validators.required),
 		phoneNumber: new FormControl('', Validators.required),

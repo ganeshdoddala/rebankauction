@@ -72,6 +72,12 @@ export class SettingsService {
           payload
         );
     }
+    sendEnquiryForm(payload:any): Observable<any> | undefined {
+      return this._http.requestCall(
+          AuthEndPoints.ENQUIRY_FORM,
+          ApiMethod.POST,
+          payload
+        );
+    }
 
-    
 }

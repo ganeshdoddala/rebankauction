@@ -39,6 +39,7 @@ export class PrivatePropertiesComponent {
           private _storage:StorageService, private _router: Router, private http:HttpClient
   ){
     this.getPrivateProperties();
+    console.log(this._storage.getLocalvalue('email'))
   }
   ngOnInit() {
   this.isAdmin = this._storage.getLocalvalue('user_type') === 'admin';
