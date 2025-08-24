@@ -10,60 +10,86 @@ import { AgentsService } from 'src/app/component/services/agents/agents.service'
   styleUrls: ['./agents.component.css']
 })
 export class AgentsComponent {
-allAgents:any;
-agentUploadRes:String | undefined;
-addAgentRes:String | undefined;
-addAgentblock:boolean = false;
-viewAgentblock:boolean = true;
-updateAgentblock:boolean = false
+  allAgents:any;
+  agentUploadRes:String | undefined;
+  addAgentRes:String | undefined;
+  addAgentblock:boolean = false;
+  viewAgentblock:boolean = true;
+  updateAgentblock:boolean = false;
+  isagentDetailsFormSubmitting:boolean = false;
   constructor(
     private _agent: AgentsService,
     private _storage:StorageService,
     private router: Router
   ){
-    this._agent.getAgents()?.subscribe({
+    this.getAgents();
+  }
+  getAgents(){this._agent.getAgents()?.subscribe({
           next: (res: any) => {
             console.log(res)
             this.allAgents=res;
           }
         })
   }
- viewAgent(){
-   this.addAgentblock = true;
-   this.viewAgentblock = false;
-   this.updateAgentblock = false;
- }
+  viewAgent(){
+    this.addAgentblock = true;
+    this.viewAgentblock = false;
+    this.updateAgentblock = false;
+  }
 
-  cancel(){
+  cancel() {
     this.agentDetailsForm.reset();
+    this.viewAgentblock = true;
+    this.addAgentblock = false;
+    this.updateAgentblock = false;
   }
 
   agentDetailsForm = new FormGroup({
       agentName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       location: new FormControl('', Validators.required),
-      password: new FormControl('')
-    });
+    }
+  );
 
     editAgentDetailsForm = new FormGroup({
       id:new FormControl(''),
       agentName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       location: new FormControl('', Validators.required),
-    });
+    }
+  );
 
     submitForm() {
+      this.isagentDetailsFormSubmitting = true;
       console.log(this.agentDetailsForm.value);
-      var payload:any = this.agentDetailsForm.value;
-      payload.createdBy = this._storage.getLocalvalue('user_type');
-      console.log(payload)
+      if (this.agentDetailsForm.invalid) {
+        this.agentDetailsForm.markAllAsTouched();
+        return;
+      }
+
+      const payload = {
+        ...this.agentDetailsForm.value,
+        createdBy: this._storage.getLocalvalue('user_type')
+      };
+
       this._agent.postAgents(payload)?.subscribe({
-          next: (res: any) => {
-            console.log(res)
-            this.addAgentRes=res.message;
-          }
-        })
+        next: (res: any) => {
+          console.log('Agent added:', res);
+          this.addAgentRes = res.message;
+          this.agentDetailsForm.reset();
+          this.viewAgentblock = true;
+          this.addAgentblock = false;
+          this.isagentDetailsFormSubmitting = false;
+          this.getAgents();
+        },
+        error: (err: any) => {
+          console.error('Error adding agent:', err);
+          this.addAgentRes = 'Something went wrong. Please try again.';
+          this.isagentDetailsFormSubmitting = false;
+        }
+      });
     }
+
 
     editAgent(agentId: any) {
       this.addAgentblock = false;
@@ -100,7 +126,9 @@ updateAgentblock:boolean = false
     console.log(id)
     this._agent.delAgent(id)?.subscribe({
           next: (res: any) => {
-            this.reloadComponent();
+            console.log(res)
+            this.agentUploadRes=res.message;
+            this.getAgents();
           }
         })
   }

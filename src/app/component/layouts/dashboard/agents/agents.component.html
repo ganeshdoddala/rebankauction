@@ -22,7 +22,7 @@
         <td>{{ agent.email }}</td>
         <td>{{ agent.location }}</td>
         <td>
-          <button class="btn btn-sm btn-primary me-2" (click)="editAgent(agent._id)">Edit</button>
+          <button class="btn btn-sm btn-primary me-2" (click)="editAgent(agent._id)" title="Edit Agent">Edit</button>
           <button class="btn btn-sm btn-danger" (click)="deleteAgent(agent._id)">Delete</button>
         </td>
       </tr>
@@ -47,14 +47,17 @@
             </div>
             <div class="col-md-12 mb-3">
                 <label>Location</label>
-                <input type="email" class="form-control" placeholder="Location" formControlName="location" required>
+                <input type="text" class="form-control" placeholder="Location" formControlName="location" required>
             </div>
         </div>
         <div class="d-flex">
-            <button type="submit" class="btn btn-outline-success">Submit</button>
-            <button class="btn btn-outline-danger btn-cancel" (click)="cancel()">clear</button>
+            <button type="submit" class="btn btn-outline-success" [disabled]="agentDetailsForm.invalid">
+    {{ isagentDetailsFormSubmitting ? 'Submitting...' : 'Submit' }}
+  </button>
+            <button class="btn btn-outline-danger btn-cancel" (click)="cancel()">cancel</button>
         </div>
-        <p>{{agentUploadRes}}</p>
+       <p class="text-success mt-2" *ngIf="addAgentRes">{{ addAgentRes }}</p>
+
     </form>
 </div>
 
@@ -76,12 +79,15 @@
             </div>
             <div class="col-md-12 mb-3">
                 <label>Location</label>
-                <input type="email" class="form-control" placeholder="Location" formControlName="location" required>
+                <input type="text" class="form-control" placeholder="Location" formControlName="location" required>
             </div>
         </div>
         <div class="d-flex">
-            <button type="submit" class="btn btn-outline-success">Submit</button>
-            <button class="btn btn-outline-danger btn-cancel" (click)="cancel()">clear</button>
+            <button type="submit" class="btn btn-outline-success" [disabled]="agentDetailsForm.invalid">
+    {{ isagentDetailsFormSubmitting ? 'Submitting...' : 'Submit' }}
+  </button>
+            <button class="btn btn-outline-danger btn-cancel" (click)="cancel()">cancel</button>
         </div>
+       <p class="text-success mt-2" *ngIf="addAgentRes">{{ addAgentRes }}</p>
     </form>
 </div>
