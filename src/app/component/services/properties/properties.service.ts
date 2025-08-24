@@ -31,7 +31,13 @@ export class PropertiesService {
         ApiMethod.GET,
       );
   }
-
+  updateProperty(id: any, property: any): Observable<any> | undefined {
+    return this._http.requestCall(
+      formatEndpoint(AuthEndPoints.PROPERTIESBYID, id),
+      ApiMethod.PUT,
+      property
+    );
+  }
   addProperty(property: any): Observable<any> | undefined {
     return this._http.requestCall(
         AuthEndPoints.PROPERTIES,

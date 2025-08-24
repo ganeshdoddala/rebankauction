@@ -6,124 +6,278 @@
     <h5>Organization/Bank Details</h5>
     <div class="col-md-4 mb-3">
       <label for="validationServer01">Title:</label>
-      <input type="text" class="form-control" id="validationServer01" placeholder="Title" formControlName="title" required>
+      <input 
+        type="text" 
+        class="form-control" 
+        [class.is-invalid]="auctionDetailsForm.get('title')?.touched && auctionDetailsForm.get('title')?.invalid"
+        formControlName="title"
+      >
     </div>
     <div class="col-md-4 mb-3">
       <label for="validationServer01">Organization/Bank Name:</label>
-      <input type="text" class="form-control" id="validationServer01" placeholder="Organization name" formControlName="organizationName" required>
+      <input 
+        type="text" 
+        class="form-control" 
+        [class.is-invalid]="auctionDetailsForm.get('organizationName')?.touched && auctionDetailsForm.get('organizationName')?.invalid"
+        formControlName="organizationName"
+      >
     </div>
     <div class="col-md-4 mb-3">
       <label for="validationServer02">Branch:</label>
-      <input type="text" class="form-control" id="validationServer02" placeholder="Branch" formControlName="organizationBranch" required>
+      <input 
+        type="text" 
+        class="form-control" 
+        formControlName="organizationBranch"
+      >
     </div>
     <div class="col-md-4 mb-3">
-      <label>Type of Property:</label><br/>
-      <select class="custom-select form-control" formControlName="propertyCategory">
-        <option *ngFor="let property of allPropertiesTypes" value="{{property.propertyType}}">{{property.propertyType}}</option>
+      <label>Property Type:</label><br/>
+      <select 
+        id="propertyType" 
+        class="selectpicker form-select" 
+        data-live-search="true"
+        formControlName="propertyType"
+        [class.is-invalid]="auctionDetailsForm.get('propertyType')?.touched && auctionDetailsForm.get('propertyType')?.invalid"
+      >
+        <option *ngFor="let property of allPropertiesTypes" [value]="property.propertyType">{{property.propertyType}}</option>
       </select>
+        <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('propertyType')?.touched && auctionDetailsForm.get('propertyType')?.hasError('required')">
+          Property type is required.
+        </div>
     </div>
     <div class="col-md-4 mb-3">
-      <label>Property Category</label><br/>
-      <select class="custom-select form-control" formControlName="propertyCategory">
+      <label>Property Category:</label><br/>
+      <select 
+        id="propertyCategory" 
+        class="selectpicker form-select" 
+        data-live-search="true"
+        formControlName="propertyCategory"
+        [class.is-invalid]="auctionDetailsForm.get('propertyCategory')?.touched && auctionDetailsForm.get('propertyCategory')?.invalid"
+      >
         <option value="Immovable">Immovable</option>
         <option value="movable">movable</option>
       </select>
-    </div>
-  
-    <!-- <div class="col-md-4 mb-3">
-      <label>Property Sub Category:</label>
-      <input type="text" class="form-control" placeholder="Property Sub Category" formControlName="propertySubCategory" required>
-    </div> -->
-    <div class="col-md-4 mb-3">
-      <label for="validationServer05">Property Description:</label>
-      <textarea class="form-control" id="validationServer05" rows="3" formControlName="propertyDescription" required></textarea>
+        <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('propertyCategory')?.touched && auctionDetailsForm.get('propertyCategory')?.hasError('required')">
+          Property category is required.
+        </div>
     </div>
     <div class="col-md-4 mb-3">
-      <label>Borrower Name:</label>
-      <input type="text" class="form-control" placeholder="Borrower Name" formControlName="borrowerName" required>
+      <label>Project Description:</label>
+    <textarea 
+        class="form-control" 
+        formControlName="propertyDescription" 
+        rows="3"
+        [class.is-invalid]="auctionDetailsForm.get('propertyDescription')?.touched && auctionDetailsForm.get('propertyDescription')?.invalid"
+      ></textarea>
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('propertyDescription')?.touched && auctionDetailsForm.get('propertyDescription')?.hasError('required')">
+        Property description is required.
+      </div>
     </div>
+    
+
     <div class="col-md-4 mb-3">
       <label>Country:</label>
-      <select class="custom-select form-control" formControlName="country">
-        <option value="india" Selected>India</option>
+      <select 
+        class="custom-select form-control" 
+        formControlName="country" 
+        [disabled]="true"
+      >
+        <option value="india" selected>India</option>
       </select>
+
     </div>
     <div class="col-md-4 mb-3">
       <label>State:</label>
-      <select class="form-control" formControlName="state" (change)="onStateChange($event)" [(ngModel)]="selectedState">
-        <option *ngFor="let state of stateNames" value="{{state.state_name_english}}">{{state.state_name_english}}</option>
+
+      
+      <select 
+        class="form-select" 
+        formControlName="state"
+        [class.is-invalid]="auctionDetailsForm.get('state')?.touched && auctionDetailsForm.get('state')?.invalid" (change)="onStateChange($event)" [(ngModel)]="selectedState"
+      >
+        <option *ngFor="let state of stateNames" [value]="state.state_name_english">{{ state.state_name_english }}</option>
       </select>
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('state')?.touched && auctionDetailsForm.get('state')?.hasError('required')">
+        State is required.
+      </div>
     </div>
     <div class="col-md-4 mb-3">
       <label>District:</label>
-      <select class="form-control" formControlName="district">
-        <option selected *ngIf="!selectedState">Select state</option>
-        <option *ngFor="let district of districNames" value="{{district.district_name_english}}">{{district.district_name_english}}</option>
+      <select 
+        class="form-select" 
+        formControlName="district"
+        [class.is-invalid]="auctionDetailsForm.get('district')?.touched && auctionDetailsForm.get('district')?.invalid"
+      >
+        <option *ngFor="let district of districNames" [value]="district.district_name_english">{{ district.district_name_english }}</option>
       </select>
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('district')?.touched && auctionDetailsForm.get('district')?.hasError('required')">
+        District is required.
+      </div>
+      
     </div>
     <div class="col-md-4 mb-3">
       <label>Location:</label>
-      <input type="text" class="form-control" placeholder="location" formControlName="location" required>
+      <input 
+        type="text" 
+        class="form-control" 
+        formControlName="location"
+        [class.is-invalid]="auctionDetailsForm.get('location')?.touched && auctionDetailsForm.get('location')?.invalid"
+      >
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('location')?.touched">
+        <span *ngIf="auctionDetailsForm.get('location')?.hasError('required')">Location is required.</span>
+        <span *ngIf="auctionDetailsForm.get('location')?.hasError('minlength')">Minimum 3 characters required.</span>
+        <span *ngIf="auctionDetailsForm.get('location')?.hasError('pattern')">Only letters, spaces, and punctuation are allowed.</span>
+      </div>
     </div>
+
     <div class="col-md-4 mb-3">
       <label>Sale Type:</label>
       <br>
-      <select class="form-control" formControlName="saleType">
-        <option value="auction">Auction</option>
-        <option value="private">Private</option>
+      <select 
+        class="custom-select form-control" 
+        formControlName="saleType" 
+        [disabled]="true"
+      >
+        <option value="auction" selected>Auction</option>
       </select>
     </div>
-    <div class="col-md-4 mb-3">
-      <label>Property Type:</label>
-      <br>
-      <select class="custom-select form-control" formControlName="propertyType">
-        <option value="Aprartment">Apartment</option>
-        <option value="individual Building">Invidual Building</option>
-      </select>
-    </div>
+    
     <div class="col-md-4 mb-3">
       <label>Project Size:</label>
-      <input type="text" class="form-control" placeholder="1Acr" formControlName="projectSize" required>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="e.g. 1 Acr or 2500 Sqft" 
+        formControlName="projectSize"
+        [class.is-invalid]="auctionDetailsForm.get('projectSize')?.touched && auctionDetailsForm.get('projectSize')?.invalid"
+      >
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('projectSize')?.touched">
+        <span *ngIf="auctionDetailsForm.get('projectSize')?.hasError('required')">Project size is required.</span>
+        <span *ngIf="auctionDetailsForm.get('projectSize')?.hasError('pattern')">Enter a valid size with unit (e.g. 1 Acr, 2500 Sqft).</span>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <h5>Borrower Details</h5>
+    <div class="col-md-4 mb-3">
+      <label>Borrower Name:</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Borrower Name" 
+        formControlName="borrowerName"
+        [class.is-invalid]="auctionDetailsForm.get('borrowerName')?.touched && auctionDetailsForm.get('borrowerName')?.invalid"
+      >
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('borrowerName')?.touched">
+        <span *ngIf="auctionDetailsForm.get('borrowerName')?.hasError('required')">Borrower name is required.</span>
+        <span *ngIf="auctionDetailsForm.get('borrowerName')?.hasError('pattern')">Only letters and spaces are allowed.</span>
+      </div>
     </div>
     <div class="col-md-4 mb-3">
       <label>Phone Number:</label>
-      <input type="number" class="form-control" placeholder="999999999" formControlName="phonenumber" required>
-    </div>
-    <!-- <div class="custom-file">
-      <label class="custom-file-label" for="customFile">Upload Property Images:</label>
-      <br />
-      <input type="file" class="custom-file-input" id="customFile">
-      <label class="custom-file-label" for="customFile">Choose file</label>
-    </div> -->
+    <input 
+        type="number" 
+        class="form-control" 
+        formControlName="phonenumber"
+        [class.is-invalid]="auctionDetailsForm.get('phonenumber')?.touched && auctionDetailsForm.get('phonenumber')?.invalid"
+      >
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('phonenumber')?.touched">
+        <span *ngIf="auctionDetailsForm.get('phonenumber')?.hasError('required')">Phone number is required.</span>
+        <span *ngIf="auctionDetailsForm.get('phonenumber')?.hasError('pattern')">Enter a valid 10-digit Indian mobile number.</span>
+      </div>
+      </div>
   </div>
   <div class="form-row">
     <h5>Action Details</h5>
 
     <div class="col-md-4 mb-3">
       <label>Action ID:</label>
-      <input type="text" class="form-control" placeholder="ID" formControlName="auctionId"  style="text-transform: uppercase" required>
+      <input 
+        type="text" 
+        class="form-control" 
+        [class.is-invalid]="auctionDetailsForm.get('auctionId')?.touched && auctionDetailsForm.get('auctionId')?.invalid"
+        formControlName="auctionId" 
+        style="text-transform: uppercase"
+      >
+
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('auctionId')?.touched && auctionDetailsForm.get('auctionId')?.hasError('required')">
+        Auction ID is required.
+      </div>
     </div>
     <div class="col-md-4 mb-3">
       <label>Reserve Price:</label>
-      <input type="number" class="form-control" placeholder="Reserve Price" formControlName="reserveprice" required>
+      <input 
+        type="number" 
+        class="form-control" 
+        [class.is-invalid]="auctionDetailsForm.get('reserveprice')?.touched && auctionDetailsForm.get('reserveprice')?.invalid"
+        formControlName="reserveprice"
+      >
+
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('reserveprice')?.touched">
+        <span *ngIf="auctionDetailsForm.get('reserveprice')?.hasError('required')">Reserve price is required.</span>
+        <span *ngIf="auctionDetailsForm.get('reserveprice')?.hasError('min')">Must be greater than 0.</span>
+      </div>
+
     </div>
     <div class="col-md-4 mb-3">
       <label>EMD Amount:</label>
-      <input type="number" class="form-control" placeholder="EMD Amount" formControlName="emdAmount" required>
+      <input 
+        type="number" 
+        class="form-control" 
+        [class.is-invalid]="auctionDetailsForm.get('emdAmount')?.touched && auctionDetailsForm.get('emdAmount')?.invalid"
+        formControlName="emdAmount" 
+        required
+      >
+
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('emdAmount')?.touched">
+        <span *ngIf="auctionDetailsForm.get('emdAmount')?.hasError('required')">EMD Amount is required.</span>
+        <span *ngIf="auctionDetailsForm.get('emdAmount')?.hasError('min')">Must be greater than 0.</span>
+      </div>
+
     </div>
     <div class="col-md-4 mb-3">
       <label>EMD Submission:</label>
-      <input type="date" class="form-control" placeholder="EMD Submission" formControlName="emdSubmission" required>
+      <input 
+        type="date" 
+        class="form-control" 
+        [class.is-invalid]="auctionDetailsForm.get('emdSubmission')?.touched && auctionDetailsForm.get('emdSubmission')?.invalid"
+        formControlName="emdSubmission"
+      >
+
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('emdSubmission')?.touched && auctionDetailsForm.get('emdSubmission')?.hasError('required')">
+        EMD submission date is required.
+      </div>
+
     </div>
     <div class="col-md-4 mb-3">
       <label>Date and Time:</label>
-      <input type="date"  class="form-control" formControlName="auctiondatetime" required>
+      <input 
+        type="datetime-local" 
+        class="form-control"
+        formControlName="auctiondatetime"
+        step="3600"
+        [class.is-invalid]="auctionDetailsForm.get('auctiondatetime')?.touched && auctionDetailsForm.get('auctiondatetime')?.invalid"
+      >
+      <div class="invalid-feedback" *ngIf="auctionDetailsForm.get('auctiondatetime')?.touched && auctionDetailsForm.get('auctiondatetime')?.hasError('required')">
+        Auction date and time is required.
+      </div>
     </div>
+
+
   </div>
   <div class="d-flex">
-  <button type="submit" class="btn btn-outline-success">Submit</button>
-  <button class="btn btn-outline-danger btn-cancel">Cancel</button>
-  <p>{{forResponse}}</p>
+  <button type="submit" class="btn btn-outline-success">
+  {{ isauctionDetailsSubmitting ? 'Submitting...' : 'Submit' }}
+  </button>
+  <button type="button" class="btn btn-outline-danger btn-cancel" (click)="onCancel()">Cancel</button>
+
+  <div *ngIf="forResponse" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+    {{ forResponse }}
+    <button type="button" class="close" (click)="forResponse = null">
+      <span>&times;</span>
+    </button>
+  </div>
+
   </div>
 </form>
 
@@ -140,7 +294,10 @@
   </div>
   
   <div class="d-flex">
-  <button type="submit" class="btn btn-outline-success" [disabled]="isauctionDetailsSubmitting" >Submit</button>
+  <button type="submit" class="btn btn-outline-success" [disabled]="auctionDetailsUploadForm.invalid || isauctionDetailsSubmitting">
+    {{ isauctionDetailsSubmitting ? 'Uploading...' : 'Submit' }}
+  </button>
+
   <button class="btn btn-outline-danger btn-cancel" (click)="auctionDetailsUploadFormCancel()">Cancel</button>
   </div>
 </form>

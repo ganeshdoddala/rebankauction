@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PropertiesService } from '../../../services/properties/properties.service'
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/component/agent/core/storage/storage.service';
 @Component({
   selector: 'app-view-properties',
   templateUrl: './view-properties.component.html',
@@ -10,11 +11,14 @@ export class ViewPropertiesComponent {
   allProperties:any;
   
   constructor(
-    private _properties: PropertiesService,private router: Router
+    private _properties: PropertiesService,private router: Router, private _storage: StorageService
   ){
     const propertyPayload = {
       admin_approval:"approved",
-      sale_type:"auction"
+      sale_type:"auction",
+      postedBy: typeof this._storage.getLocalvalue('email') === 'string'
+        ? (this._storage.getLocalvalue('email') as string).replace(/^["']|["']$/g, '')
+        : ''
     }
     this._properties.getAuctionProperties(propertyPayload)?.subscribe({
           next: (res: any) => {
@@ -26,11 +30,10 @@ export class ViewPropertiesComponent {
 
   ngOnInit() {
   }
-  
+
   
 
   delProperty(id:String){
-    console.log(id)
     this._properties.delProperty(id)?.subscribe({
           next: (res: any) => {
             console.log(res)
@@ -56,5 +59,9 @@ viewProperty(id:any){
           window.open(url, '_blank');
           }
         })
+  }
+
+  editProperty(id: String){
+    this.router.navigate(['/dashboard/editproperties', id]);
   }
 }

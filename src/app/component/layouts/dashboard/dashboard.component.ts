@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../agent/auth/services/auth.service';
+import { StorageService } from '../../agent/core/storage/storage.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,14 @@ import { AuthService } from '../../agent/auth/services/auth.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-constructor(
-    private _auth: AuthService,
-  ) {}
+  isAdmin:boolean = false;
+  constructor(
+      private _auth: AuthService, private _storage:StorageService
+    ) {
+      console.log(this._storage.getLocalvalue('user_type'))
+      const userType = this._storage.getLocalvalue('user_type');
+      this.isAdmin = userType == 'admin';
+    }
 
   
   logout(){

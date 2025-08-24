@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./private-properties.component.css']
 })
 export class PrivatePropertiesComponent {
+
   allProperties:any;
   viewApprovalRequireProperties:any;
   viewPrivateProperties:boolean =true;
@@ -26,24 +27,25 @@ export class PrivatePropertiesComponent {
   stateNames:any;
   districNames:any;
   selectedState:any="";
+  isAdmin:boolean = false;
+
+  getPPdata = {
+      admin_approval:"approved",
+      sale_type:"private",
+      postedBy:this._storage.getLocalvalue('email')
+    }
   constructor(
     private _properties: PropertiesService,private _settings: SettingsService,private _agent: AgentsService,
           private _storage:StorageService, private _router: Router, private http:HttpClient
   ){
+    this.getPrivateProperties();
+  }
+  ngOnInit() {
+  this.isAdmin = this._storage.getLocalvalue('user_type') === 'admin';
+
     this.viewPrivateProperties = true;
     this.addPrivateProperties =false;
     this.viewadminApprovals =false;
-    const getPPdata = {
-      admin_approval:"approved",
-      sale_type:"private"
-    }
-    this._properties.getPrivateProperties(getPPdata)?.subscribe({
-          next: (res: any) => {
-            console.log(res)
-            this.allProperties=res;
-          }
-        });
-
     this._settings.getPropertyType()?.subscribe({
                 next: (res: any) => {
                   console.log(res)
@@ -69,7 +71,14 @@ export class PrivatePropertiesComponent {
                 })
   }
 
-  ngOnInit() {
+
+  getPrivateProperties(){
+    this._properties.getPrivateProperties(this.getPPdata)?.subscribe({
+          next: (res: any) => {
+            console.log(res)
+            this.allProperties=res;
+          }
+        });
   }
 
   onStateChange(event:Event){
@@ -86,21 +95,43 @@ export class PrivatePropertiesComponent {
     })
   }
 
- 
+ cancelAddProperty(){
+   this.viewPrivateProperties=true;
+   this.addPrivateProperties =false;
+   this.viewadminApprovals =false;
+   this.isPrivatePropertySubmitting = false;
+  }
+
   addPropertyComponent(){
     this.viewPrivateProperties=false;
     this.addPrivateProperties =true;
     this.viewadminApprovals =false;
     this.isPrivatePropertySubmitting = false;
   }
+
+  editProperty(id:any) {
+    this._properties.getPropertyDetails(id)?.subscribe(data => {
+      this.PPDetailsForm.patchValue(data);
+      this.viewPrivateProperties=false;
+      this.addPrivateProperties =true;
+      this.viewadminApprovals =false;
+      this.isPrivatePropertySubmitting = false;
+    });
+  }
   addProperty(){
     this.isPrivatePropertySubmitting = true;
     console.log(this.PPDetailsForm.value)
     var payload:any = this.PPDetailsForm.value;
     payload.createdBy = this._storage.getLocalvalue('user_type');
+    payload.postedBy = this._storage.getLocalvalue('email');
     this._properties.addPrivateProperty(payload)?.subscribe({
       next: (res: any) => {
         console.log(res)
+        this.getPrivateProperties();
+        this.PPDetailsForm.reset();
+        this.viewPrivateProperties=true;
+        this.isPrivatePropertySubmitting = false;
+        this.addPrivateProperties = false;
         this._router.navigateByUrl('/dashboard/privateproperties');
       }
     })
@@ -112,12 +143,16 @@ export class PrivatePropertiesComponent {
     this.viewadminApprovals =true;
     const getPPdata = {
       admin_approval:"pending",
-      sale_type:"private"
+      sale_type:"private",
+      postedBy: ''
     }
     this._properties.getPrivateProperties(getPPdata)?.subscribe({
           next: (res: any) => {
-            console.log(res)
+            if(res.length != 0){
             this.viewApprovalRequireProperties=res;
+            } else {
+              this.viewApprovalRequireProperties = [];
+            }
           }
         });
   }
@@ -151,7 +186,8 @@ export class PrivatePropertiesComponent {
  delPrivateProperty(id:any){
     this._properties.delProperty(id)?.subscribe({
           next: (res: any) => {
-            this.reloadComponent();
+            // this.reloadComponent();
+            this.viewAdminApprovals();
           }
         })
   }
@@ -185,5 +221,11 @@ export class PrivatePropertiesComponent {
       auctionId: new FormControl('', Validators.required),
     });
 
-   
+  onCancel(): void {
+  if (confirm('Are you sure you want to cancel? All unsaved data will be lost.')) {
+    this.PPDetailsForm.reset();
+    this.addPrivateProperties = false;
+    this.viewPrivateProperties = true;
+  }
+}
 }

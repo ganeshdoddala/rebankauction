@@ -82,11 +82,12 @@ loginForm: FormGroup;
             console.log(res)
             this.setUser(res);
             this._router.navigateByUrl('/dashboard');
-            
-            this._storage.setLocalObject('location', res.user['location']);
-            this._storage.setLocalObject('user_type', res.user['role']);
+            console.log('User logged in:', res.user.role);
+            this._storage.setLocalObject('location', res.user.location);
+            this._storage.setLocalObject('user_type', res.user.role);
             if (res.user.role == 'admin' || res.user.role == 'agent') {
-              this._storage.setLocalObject('userId', res.user['_id']);
+              this._storage.setLocalObject('userId', res.user._id);
+              this._storage.setLocalObject('email', res.user.email);
             }
           },
           error: (err: any) => {

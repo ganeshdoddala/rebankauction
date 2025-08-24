@@ -46,7 +46,7 @@ export class StorageService {
   getLocalvalue(key: string) {
     let value = localStorage.getItem(key);
     if (value) {
-      return this._util.decrypt(value);
+      return this._util.decrypt(value)?.replace(/^["']|["']$/g, '');
     } else return false;
   }
 }

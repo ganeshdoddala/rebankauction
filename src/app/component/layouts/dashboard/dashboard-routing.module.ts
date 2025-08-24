@@ -18,7 +18,8 @@ const routes: Routes = [
       { path: 'privateproperties', component: PrivatePropertiesComponent },
       { path: 'agents', component: AgentsComponent },
       { path: 'settings', component: SettingsComponent },
-      { path: 'addproperties', component: AddPropertiesComponent }
+      { path: 'addproperties', component: AddPropertiesComponent },
+      { path: 'editproperties/:id', component: AddPropertiesComponent }
     ]
   }
 ];

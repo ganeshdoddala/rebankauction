@@ -18,19 +18,22 @@
   </thead>
   <tbody>
     <tr *ngFor="let property of allProperties">
-      <td scope="row">{{property.auctionId}}</td>
-      <th><a (click)="viewProperty(property._id)">{{property.title}}</a></th>
+      <th scope="row"><a (click)="viewProperty(property._id)">{{property.auctionId}}</a></th>
+      <td><a (click)="viewProperty(property._id)">{{property.title}}</a></td>
       <td>{{property.location}}, {{property.district}}, {{property.state}}</td>
       <td>{{property.projectSize}}</td>
       <td>{{property.organizationName}}, {{property.organizationBranch}}</td>
       <td>{{property.auctiondatetime}}</td>
       <td>{{property.saleType}}</td>
-      <td><button class="btn btn-outline-primary" (click)="viewProperty(property._id)"><span class="material-icons">
-open_in_new
-</span></button></td>
-      <td><button class="btn btn-outline-danger" (click)="delProperty(property._id)"><span class="material-icons">
-delete
-</span></button></td>
+      <td><span class="material-icons text-success" style="cursor: pointer; font-size: 1.6em;" (click)="viewProperty(property._id)">
+      open_in_new
+      </span></td>
+      <td><span class="material-icons text-warning" style="cursor: pointer; font-size: 1.6em;" (click)="editProperty(property._id)">
+      edit
+      </span></td>
+      <td><span class="material-icons text-danger" style="cursor: pointer; font-size: 1.6em;" (click)="delProperty(property._id)">
+      delete
+      </span></td>
     </tr>
   </tbody>
 </table>

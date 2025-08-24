@@ -3,7 +3,8 @@ export enum ApiMethod {
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
-  UPLOAD = 'UPLOAD'
+  UPLOAD = 'UPLOAD',
+  PATCH = 'PATCH'
 }
 
 export enum AuthEndPoints {
@@ -12,9 +13,10 @@ export enum AuthEndPoints {
   LOGIN = 'v1/login',
   LOGOUT_USER = 'v1/logout',
   PROPERTIES = 'v1/properties',
-  AUCTION_PROPERTIES = 'v1/get-private-properties',
+  AUCTION_PROPERTIES = 'v1/get-properties-dashboard',
   DEL_PROPERTIES = 'v1/properties/delete/{0}',
-  PRIVATE_PROPERTIES = 'v1/get-private-properties',
+  PRIVATE_PROPERTIES = 'v1/get-properties-dashboard',
+  ADMIN_APROVAL_PROPERTIES = 'v1/get-adminApproval-properties-dashboard',
   PROPERTIESBYID = 'v1/properties/{0}',
   GET_PRIVATE = 'v1/private',
   POST_PRIVATE = 'v1/private',

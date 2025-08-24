@@ -21,10 +21,10 @@
       <li class="nav-item">
         <a class="nav-link text-white" routerLink="/dashboard/privateproperties">Private Properties</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAdmin">
         <a class="nav-link text-white" routerLink="/dashboard/agents">Agents</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAdmin">
         <a class="nav-link text-white" routerLink="/dashboard/settings">Settings</a>
       </li>
     </ul>
