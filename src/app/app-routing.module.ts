@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'properties', component: PropertiesComponent },
   { path: 'dashboard', loadChildren: () => import('./component/layouts/dashboard/dashboard.module').then(m => m.DashboardModule) },
   { path: 'property-details/:id', component: PropertyDetailsComponent },
+  { path: 'forgotpassword', component: ForgotPasswordComponent },
   { path: 'login', component: LoginComponent },
   { path: '',
     redirectTo: '/home',

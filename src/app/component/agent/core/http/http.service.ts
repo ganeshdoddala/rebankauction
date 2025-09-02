@@ -6,7 +6,7 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { CurrentUserResponse } from '../../models/current-user-response.model';
 
 @Injectable({
@@ -33,7 +33,13 @@ export class HttpService {
       case ApiMethod.GET:
         response = this.http
           .get(`${environment.API_URL}${endpoint}`, { headers })
-          .pipe(catchError(err => this.handleError(err)));
+          .pipe(
+            map(res => {
+              console.log('Raw response:', res);
+              return res;
+            }),
+            catchError(err => this.handleError(err))
+          );
         break;
 
       case ApiMethod.POST:

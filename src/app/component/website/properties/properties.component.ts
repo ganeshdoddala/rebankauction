@@ -35,18 +35,25 @@ export class PropertiesComponent implements OnInit {
         this.getPropertyTypes();
         this.getstatesNames();
   }
-  
+  getallPropertiesObject: Object = {
+    district: "",
+    keyword: "",
+    property_type: "",
+    state: ""
+  };
 
   ngOnInit(): void {
   }
 
   getPropertyTypes() {
-    this._settings.getPropertyType()?.subscribe({
-      next: (res: any) => {
-        console.log(res)
-        this.allPropertiesTypes=Object.values(res);
-      }
-    })
+    this._propery.querySearch(this.getallPropertiesObject)?.subscribe({
+          next: (res: any) => {
+            console.log(res)
+            if(res){
+            this.allProperties=Object.values(res);
+            }
+          }
+        })
   }
 
   getallProperties(){
@@ -100,16 +107,17 @@ onStateChange(event:Event){
     })
   }
 
-submitForm() {
+  submitForm() {
     var payload:any = this.searchForm.value;
-      this._propery.querySearch(payload)?.subscribe({
-          next: (res: any) => {
-            console.log(res)
-            if(res){
-            this.allProperties=Object.values(res);
-            }
+    this._propery.querySearch(payload)?.subscribe({
+        next: (res: any) => {
+          console.log(res)
+          if(res){
+          this.allProperties=Object.values(res);
           }
-        })
+        }
+      }
+    )
   }
 
 

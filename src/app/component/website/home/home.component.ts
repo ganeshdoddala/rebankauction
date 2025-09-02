@@ -35,6 +35,7 @@ import {
 import {
 	environment
 } from 'src/environments/environment';
+import { Title } from '@angular/platform-browser';
 declare var bootstrap: any;
 @Component({
 	selector: 'app-home',
@@ -56,12 +57,7 @@ export class HomeComponent implements OnInit {
 	isSubmitting: boolean = false;
 	constructor(private _properties: PropertiesService, private _settings: SettingsService, private _agent: AgentsService,
 		private _storage: StorageService, private _router: Router, private _propery: PropertiesService, private _service: SettingsService, private http: HttpClient) {
-		this._properties.getProperties()?.subscribe({
-			next: (res: any) => {
-				console.log(res)
-				this.allProperties = res.slice(0, 10);
-			}
-		})
+		
 		// this._settings.getPropertyTypeAndCount()?.subscribe({
 		// 	next: (res: any) => {
 		// 		console.log(res)
@@ -84,8 +80,21 @@ export class HomeComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.getAllProperties();
 		this.getPropertyTypes();
 		this.getstatesNames();
+	}
+
+	getAllProperties() {
+	this._properties.getProperties()?.subscribe({
+		next: (res: any) => {
+			console.log(res)
+		this.allProperties = res.records;
+		},
+		error: (err) => {
+		console.error('Error fetching properties:', err);
+		}
+	});
 	}
 
   getstatesNames() {
@@ -106,7 +115,6 @@ export class HomeComponent implements OnInit {
 	getPropertyTypes() {
 		this._settings.getPropertyType()?.subscribe({
 			next: (res: any) => {
-				console.log(res)
 				this.allPropertiesTypes = Object.values(res).slice(0, 10);
 			}
 		})
@@ -114,7 +122,7 @@ export class HomeComponent implements OnInit {
 
 	resetSearchForm() {
 		this.searchForm.reset({
-      keyword:'',
+			keyword: '',
 			property_type: '',
 			state: '',
 			district: ''
@@ -192,7 +200,9 @@ export class HomeComponent implements OnInit {
 	}
 
 
-	selectedProperty: any = {};
+	selectedProperty: any = {
+		title: ''
+	};
 	userDetails = {
 		name: '',
 		email: '',

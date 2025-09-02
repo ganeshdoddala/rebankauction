@@ -62,4 +62,12 @@ export class AuthService implements CanActivate {
     }
     return true;
   }
+
+  sendResetLink(email: string): Observable<Object> | undefined {
+    return this._http.requestCall(
+      AuthEndPoints.FORGOT_PASSWORD,
+      ApiMethod.POST,
+      { email }
+    );
+  }
 }

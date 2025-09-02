@@ -35,5 +35,6 @@ export enum AuthEndPoints {
   GET_STATE = 'https://api.data.gov.in/resource/a71e60f0-a21d-43de-a6c5-fa5d21600cdb',
   GET_DISTRICT='https://api.data.gov.in/resource/37231365-78ba-44d5-ac22-3deec40b9197',
   UPLOAD_BULKPROPERTIES='v1/bulkUpload',
-  DELETE_AGENT='v1/agent/delete/{0}'
+  DELETE_AGENT='v1/agent/delete/{0}',
+  FORGOT_PASSWORD='v1/forgot-password'
 }

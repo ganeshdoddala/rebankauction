@@ -18,6 +18,7 @@ import { LIGHTBOX_CONFIG, LightboxModule } from  'ng-gallery/lightbox';
 import { config } from 'rxjs';
 import { LightgalleryModule } from 'lightgallery/angular';
 import { PropertyDetailsComponent } from './component/website/property-details/property-details.component';
+import { ForgotPasswordComponent } from './component/agent/forgotPassword/forgotPassword.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PropertyDetailsComponent } from './component/website/property-details/p
     PropertiesComponent,
     LoginComponent,
     PropertyDetailsComponent,
-    SafeDatePipe
+    SafeDatePipe,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

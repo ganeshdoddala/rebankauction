@@ -28,6 +28,7 @@ export class AddPropertiesComponent {
   isauctionDetailsSubmitting: boolean = false;
   isEditMode = false;
   propertyId: string | null = null;
+  isUploading: boolean = false;
 
   constructor(private _settings: SettingsService,private _agent: AgentsService,
       private _storage:StorageService, private _router: Router,private _propery: PropertiesService, private http:HttpClient, private route: ActivatedRoute){
@@ -180,22 +181,50 @@ export class AddPropertiesComponent {
   }
   
 
-uploadExcel(){
-    if(this.fileToUpload) {
-      const formData = new FormData();
-      formData.append('file', this.fileToUpload, this.fileToUpload.name);
-      this._propery.uploadBulkProperties(formData)?.subscribe({
-    next: (res: any) => {
-      console.log(res);
-      this.forResponse = res.message;
-      this._router.navigateByUrl('/dashboard/getproperties');
-    }
-  })
-}
-}
+// uploadExcel(){
+//     if(this.fileToUpload) {
+//       const formData = new FormData();
+//       formData.append('file', this.fileToUpload, this.fileToUpload.name);
+//       this._propery.uploadBulkProperties(formData)?.subscribe({
+//     next: (res: any) => {
+//       console.log(res);
+//       this.forResponse = res.message;
+//       this._router.navigateByUrl('/dashboard/getproperties');
+//     }
+//   })
+// }
+// }
   auctionDetailsUploadForm = new FormGroup({
     file: new FormControl<File | null>(null, Validators.required)
   });
+
+
+uploadExcel() {
+  const fileControl = this.auctionDetailsUploadForm.get('file');
+  const file = fileControl?.value;
+
+  if (file) {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+
+    this.isUploading = true;
+    this._propery.uploadBulkProperties(formData)?.subscribe({
+      next: (res: any) => {
+        this.isUploading = false;
+        this.forResponse = res.message;
+        this._router.navigateByUrl('/dashboard/getproperties');
+      },
+      error: (err: any) => {
+        this.isUploading = false;
+        this.forResponse = 'Upload failed. Please try again.';
+      }
+    });
+
+  } else {
+    this.forResponse = 'Please select a file before uploading.';
+  }
+}
+
 
   auctionDetailsUploadFormCancel(): void {
     this.auctionDetailsUploadForm.reset();
@@ -207,6 +236,8 @@ uploadExcel(){
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.fileToUpload = input.files[0];
+      this.auctionDetailsUploadForm.patchValue({ file: this.fileToUpload });
+      this.auctionDetailsUploadForm.get('file')?.updateValueAndValidity();
       console.log("Selected file:", this.fileToUpload);
     } else {
       this.fileToUpload = null;
