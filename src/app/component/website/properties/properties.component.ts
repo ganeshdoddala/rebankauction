@@ -66,9 +66,8 @@ export class PropertiesComponent implements OnInit {
   getPropertyTypes() {
     this._propery.getPropertyTypes()?.subscribe({
           next: (res: any) => {
-            if(res){
-            this.propertyTypes=Object.values(res);
-            }
+            console.log(res);
+            this.propertyTypes=res;
           }
         })
   }
