@@ -35,7 +35,6 @@ import {
 import {
 	environment
 } from 'src/environments/environment';
-import { Title } from '@angular/platform-browser';
 declare var bootstrap: any;
 @Component({
 	selector: 'app-home',
@@ -85,16 +84,14 @@ export class HomeComponent implements OnInit {
 		this.getstatesNames();
 	}
 
-	getAllProperties() {
-	this._properties.getProperties()?.subscribe({
-		next: (res: any) => {
-			console.log(res)
-		this.allProperties = res.records;
-		},
-		error: (err) => {
-		console.error('Error fetching properties:', err);
-		}
-	});
+	getAllProperties(){
+		this._properties.getProperties()?.subscribe({
+			next: (res: any) => {
+				this.allProperties = Object.values(res)
+				.sort((a, b) => new Date((b as any).updatedAt).getTime() - new Date((a as any).updatedAt).getTime())
+				.slice(0, 10);
+			}
+		})
 	}
 
   getstatesNames() {
@@ -115,6 +112,7 @@ export class HomeComponent implements OnInit {
 	getPropertyTypes() {
 		this._settings.getPropertyType()?.subscribe({
 			next: (res: any) => {
+				console.log(res)
 				this.allPropertiesTypes = Object.values(res).slice(0, 10);
 			}
 		})
@@ -200,9 +198,7 @@ export class HomeComponent implements OnInit {
 	}
 
 
-	selectedProperty: any = {
-		title: ''
-	};
+	selectedProperty: any = {};
 	userDetails = {
 		name: '',
 		email: '',

@@ -28,6 +28,7 @@ export enum AuthEndPoints {
   PROPERY_TYPE='v1/addTypeofProperty',
   PROPERTY_SUB = 'v1/propertySubCategory',
   PROPERY_TYPE_COUNT ='v1/property-type-count',
+  PROPERY_TYPES ='v1/property-types',
   STATE = 'v1/listStates',
   PROPERTIES_QUERY = 'v1/properties/query',
   CONTACT_FORM='v1/contactForm',

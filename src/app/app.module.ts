@@ -30,7 +30,6 @@ import { ForgotPasswordComponent } from './component/agent/forgotPassword/forgot
     FooterComponent,
     HeaderComponent,
     PropertiesComponent,
-    LoginComponent,
     PropertyDetailsComponent,
     SafeDatePipe,
     ForgotPasswordComponent

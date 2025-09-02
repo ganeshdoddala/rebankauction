@@ -19,7 +19,6 @@ declare var bootstrap: any;
   providers: [OrderByPipe]
 })
 export class PropertiesComponent implements OnInit {
-  allProperties:any;
   allPropertiesTypes: any;
   stateNames:any;
   nullProperties:any = null;
@@ -28,12 +27,16 @@ export class PropertiesComponent implements OnInit {
   propertyDetails:any;
   showSuccess = false;
   isSubmitting: boolean = false;
+  propertyTypes: any[] = [];
+  totalPages: number = 0;
+  currentPage = 1;
+  itemsPerPage = 50;
+  pagedProperties : any;
+  responsiveProperties:any;
   constructor( private _properties: PropertiesService,private _settings: SettingsService,private _agent: AgentsService,
         private _storage:StorageService, private _router: Router,private _propery: PropertiesService, private http:HttpClient, 
         private orderByPipe: OrderByPipe, private _service:SettingsService) { 
-        this.getallProperties();
-        this.getPropertyTypes();
-        this.getstatesNames();
+        
   }
   getallPropertiesObject: Object = {
     district: "",
@@ -43,14 +46,28 @@ export class PropertiesComponent implements OnInit {
   };
 
   ngOnInit(): void {
+        this.getallProperties();
+        this.getPropertyTypes();
+        this.getstatesNames();
+        this.updatePagedProperties();
+  }
+  
+  updatePagedProperties() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.pagedProperties = this.responsiveProperties.slice(start, end);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.updatePagedProperties();
   }
 
   getPropertyTypes() {
-    this._propery.querySearch(this.getallPropertiesObject)?.subscribe({
+    this._propery.getPropertyTypes()?.subscribe({
           next: (res: any) => {
-            console.log(res)
             if(res){
-            this.allProperties=Object.values(res);
+            this.propertyTypes=Object.values(res);
             }
           }
         })
@@ -59,8 +76,9 @@ export class PropertiesComponent implements OnInit {
   getallProperties(){
     this._properties.getProperties()?.subscribe({
       next: (res: any) => {
-        console.log(res)
-        this.allProperties=res;
+        this.responsiveProperties = Object.values(res);
+        this.pagedProperties=Object.values(res).slice(0, this.itemsPerPage);
+        this.totalPages = Math.ceil(this.responsiveProperties.length / this.itemsPerPage);
       }
     })
   }
@@ -71,7 +89,6 @@ export class PropertiesComponent implements OnInit {
             params = params.set('limit', 100);
             this.http.get(AuthEndPoints.GET_STATE, { params })?.subscribe({
                   next: (res: any) => {
-                    console.log(res.records)
                     this.stateNames = res.records.sort((a:any, b:any) =>
                       a.state_name_english.localeCompare(b.state_name_english)
                     );  
@@ -89,10 +106,10 @@ export class PropertiesComponent implements OnInit {
   searchFormreset(){
     this.searchForm.reset();
     this.getallProperties();
+    this.ngOnInit();
   }
 
 onStateChange(event:Event){
-    console.log(this.selectedState)
     let params = new HttpParams();
     params = params.set('api-key', environment.stateanddistrictsapiKkey);
     params = params.set('format', "json");
@@ -111,9 +128,10 @@ onStateChange(event:Event){
     var payload:any = this.searchForm.value;
     this._propery.querySearch(payload)?.subscribe({
         next: (res: any) => {
-          console.log(res)
           if(res){
-          this.allProperties=Object.values(res);
+          this.responsiveProperties = Object.values(res);
+        this.pagedProperties=Object.values(res).slice(0, this.itemsPerPage);
+        this.totalPages = Math.ceil(this.responsiveProperties.length / this.itemsPerPage);
           }
         }
       }
@@ -122,7 +140,6 @@ onStateChange(event:Event){
 
 
   viewProperty(id:any){
-    console.log(id);
     const url = this._router.serializeUrl(
       this._router.createUrlTree(['/property-details', id])
     );
@@ -156,7 +173,6 @@ onStateChange(event:Event){
   openModal(property: Property): void {
     this.isSubmitting = false;
     this.selectedProperty = property;
-    console.log('Selected Property:', property);
     this.userDetails = { name: '', email: '', phone: '', message: '' };
     const modal = document.getElementById('interestModal');
     if (modal) {
@@ -173,7 +189,6 @@ onStateChange(event:Event){
   }
   getPropertyDetails(id: string): void {this._properties.getPropertyDetails(id)?.subscribe({
           next: (res: any) => {
-            console.log(res)
             this.propertyDetails=res;
           }
         })

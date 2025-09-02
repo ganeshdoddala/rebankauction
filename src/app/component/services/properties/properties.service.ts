@@ -16,7 +16,12 @@ export class PropertiesService {
         ApiMethod.GET,
       );
   }
-
+  getPropertyTypes(): Observable<any> | undefined {
+    return this._http.requestCall(
+        AuthEndPoints.PROPERY_TYPES,
+        ApiMethod.GET,
+      );
+  }
   getAuctionProperties(payload:any): Observable<any> | undefined {
     return this._http.requestCall(
         AuthEndPoints.AUCTION_PROPERTIES,
