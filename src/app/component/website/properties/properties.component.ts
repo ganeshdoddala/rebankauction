@@ -76,11 +76,12 @@ export class PropertiesComponent implements OnInit {
     this._properties.getProperties()?.subscribe({
       next: (res: any) => {
         this.responsiveProperties = Object.values(res);
-        this.pagedProperties=Object.values(res).slice(0, this.itemsPerPage);
+        this.pagedProperties=Object.values(res).sort((a, b) => new Date((b as any).updatedAt).getTime() - new Date((a as any).updatedAt).getTime()).slice(0, this.itemsPerPage);
         this.totalPages = Math.ceil(this.responsiveProperties.length / this.itemsPerPage);
       }
     })
   }
+  
   getstatesNames() {
     let params = new HttpParams();
             params = params.set('api-key', environment.stateanddistrictsapiKkey);
@@ -129,8 +130,8 @@ onStateChange(event:Event){
         next: (res: any) => {
           if(res){
           this.responsiveProperties = Object.values(res);
-        this.pagedProperties=Object.values(res).slice(0, this.itemsPerPage);
-        this.totalPages = Math.ceil(this.responsiveProperties.length / this.itemsPerPage);
+          this.pagedProperties=Object.values(res).sort((a, b) => new Date((b as any).updatedAt).getTime() - new Date((a as any).updatedAt).getTime()).slice(0, this.itemsPerPage);
+          this.totalPages = Math.ceil(this.responsiveProperties.length / this.itemsPerPage);
           }
         }
       }

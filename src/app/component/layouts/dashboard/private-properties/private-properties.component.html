@@ -1,7 +1,7 @@
 <div class="d-flex">
 <h2 class="componentHead" (click)="cancelAddProperty()" style="cursor: pointer;">Private Properties</h2>
-<button class="btn btn-outline-success px-3 d-none d-lg-flex ml-auto p-2" (click)="addPropertyComponent()">Add</button>
-<button class="btn btn-outline-success px-3 d-none d-lg-flex ml-auto p-2" (click)="viewAdminApprovals()" *ngIf="isAdmin">Approvals</button>
+<button class="btn btn-outline-success px-3 d-lg-flex ml-auto p-2" (click)="addPropertyComponent()">Add</button>
+<button class="btn btn-outline-success px-3 d-lg-flex ml-auto p-2" (click)="viewAdminApprovals()" *ngIf="isAdmin">Approvals</button>
 </div>
 
 <div  *ngIf="viewPrivateProperties">
@@ -11,7 +11,7 @@
       <th scope="col">ID</th>
       <th scope="col">Title</th>
       <th scope="col">Location</th>
-      <th scope="col">Measurement</th>
+      <th scope="col">Area</th>
     </tr>
   </thead>
   <tbody>
@@ -156,8 +156,8 @@
     <tr *ngFor="let property of viewApprovalRequireProperties">
       <th scope="row">{{property.auctionId}}</th>
       <th scope="row">{{property.title}}</th>
-      <td>{{property.location}}, {{property.district}}, {{property.state}}</td>
-      <td>{{property.projectSize}}</td>
+      <td scope="row">{{property.location}}, {{property.district}}, {{property.state}}</td>
+      <td scope="row">{{property.projectSize}}</td>
       <td>
         <button class="btn btn-secondary" (click)="viewProperty(property._id)"><span class="material-icons" data-toggle="tooltip" data-placement="top" title="View">article</span></button>
         <button class="btn btn-success" (click)="approveProperty(property._id)"><span class="material-icons" data-toggle="tooltip" data-placement="top" title="Approve">done</span></button>

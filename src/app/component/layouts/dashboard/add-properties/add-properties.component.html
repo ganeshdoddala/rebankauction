@@ -1,5 +1,5 @@
 <div class="d-flex">
-<button class="btn btn-warning px-3 d-none d-lg-flex ml-auto p-2" (click)="loadBulkUpload()" *ngIf="!bulkUploadSection">Upload Bulk</button>
+<button class="btn btn-warning px-3 d-lg-flex ml-auto p-2" (click)="loadBulkUpload()" *ngIf="!bulkUploadSection">Upload Bulk</button>
 </div>
 <form [formGroup]="auctionDetailsForm" (ngSubmit)="submitForm()" *ngIf="!bulkUploadSection">
   <div class="form-row">
