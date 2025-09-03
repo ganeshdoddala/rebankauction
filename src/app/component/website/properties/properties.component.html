@@ -31,20 +31,20 @@
                                 </div>
                                 <div class="col-md-4">
                                     <select class="form-select border-0 py-3" formControlName="property_type">
-                                        <option selected value="" disabled>Property Type</option>
+                                        <option selected value="">Property Type</option>
                                         <option *ngFor="let property of propertyTypes" value="{{property.propertyType}}">{{property.propertyType}}</option>
                                     </select>
                                 </div>
 
                                 <div class="col-md-4">
                                     <select class="form-select border-0 py-3" formControlName="state" (change)="onStateChange($event)" [(ngModel)]="selectedState">
-                                        <option selected value="" disabled>Select State</option>
+                                        <option selected value="">Select State</option>
                                         <option *ngFor="let state of stateNames" value="{{state.state_name_english}}">{{state.state_name_english}}</option>
                                     </select>
                                     </div>
                                     <div class="col-md-4">
                                     <select class="form-select border-0 py-3" formControlName="district">
-                                        <option selected value="" disabled>Select District</option>
+                                        <option selected value="">Select District</option>
                                         <option *ngFor="let district of districtNames" value="{{district.district_name_english}}">{{district.district_name_english}}</option>
                                     </select>
                                     </div>
