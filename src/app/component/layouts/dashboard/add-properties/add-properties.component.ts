@@ -90,17 +90,14 @@ export class AddPropertiesComponent {
     ]),
     saleType: new FormControl('auction'),
     propertyType: new FormControl('', Validators.required),
-    projectSize: new FormControl('', [
-      Validators.required,
-      Validators.pattern(/^\d+(\.\d{1,2})?\s?(Acr|Sqft|Sqm|Ha)$/i)
-    ]),
+    projectSize: new FormControl(""),
     phonenumber: new FormControl('', [
       Validators.required,
       Validators.pattern(/^[6-9]\d{9}$/), // Valid Indian mobile number
       Validators.maxLength(10)
     ]),
-    reserveprice: new FormControl('', [Validators.required, Validators.min(1000)]),
-    emdAmount: new FormControl('', [Validators.required, Validators.min(1000)]),
+    reserveprice: new FormControl('', Validators.required),
+    emdAmount: new FormControl('', Validators.required),
     emdSubmission: new FormControl('', Validators.required),
     auctiondatetime: new FormControl('', [
       Validators.required,
