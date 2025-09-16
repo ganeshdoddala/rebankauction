@@ -63,7 +63,6 @@ export class AddPropertiesComponent {
                     this.stateNames = res.records
                   }
             })
-          
     }
 
      loadPropertyDetails(id: any): void {
@@ -112,7 +111,6 @@ export class AddPropertiesComponent {
   }
 
   submitForm() {
-  
   if (this.auctionDetailsForm.invalid) {
     this.auctionDetailsForm.markAllAsTouched();
     return;
@@ -157,7 +155,6 @@ export class AddPropertiesComponent {
   }
   }
 }
-
 
   onStateChange(event:Event){
     console.log(this.selectedState)

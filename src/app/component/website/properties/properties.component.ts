@@ -150,12 +150,11 @@ onStateChange(event:Event){
       const whatsappMessage = {
         title: property.title,
         price: property.reserveprice,
-        location: `${property.location}, ${property.district}, ${property.state}`,
-        link: `https://rebankauctions.com//property-details/${property._id}`
+        location: `${property.location}, ${property.district}, ${property.state}`
       };
 
     // const auctionMessage = `🏡 *${whatsappMessage.title}*\n📍 Location: ${whatsappMessage.location}\n💰 Price: ${whatsappMessage.price}\n🔗 View: ${whatsappMessage.link}\n🔗 Action ID: ${property.auctionId}`;
-    const auctionMessage = `🏡 *${whatsappMessage.title}*\n📍 Location: ${whatsappMessage.location}\n💰 Price: ${whatsappMessage.price}\n🔗 View: ${whatsappMessage.link}\n🔗 Action ID: ${property.auctionId}`;
+    const auctionMessage = `🏡 *${whatsappMessage.title}*\n📍 Location: ${whatsappMessage.location}\n💰 Price: ${whatsappMessage.price}\n🔗 \n🔗 Action ID: ${property.auctionId}`;
     const encodedMessage = encodeURIComponent(auctionMessage);
     const whatsappUrl = `https://wa.me/918277133999?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
