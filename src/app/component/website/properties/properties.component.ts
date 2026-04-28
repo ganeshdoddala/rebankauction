@@ -83,17 +83,24 @@ export class PropertiesComponent implements OnInit {
   }
   
   getstatesNames() {
-    let params = new HttpParams();
-            params = params.set('api-key', environment.stateanddistrictsapiKkey);
-            params = params.set('format', "json");
-            params = params.set('limit', 100);
-            this.http.get(AuthEndPoints.GET_STATE, { params })?.subscribe({
-                  next: (res: any) => {
-                    this.stateNames = res.records.sort((a:any, b:any) =>
-                      a.state_name_english.localeCompare(b.state_name_english)
-                    );  
-                  }
-            })
+    // let params = new HttpParams();
+    //         params = params.set('api-key', environment.stateanddistrictsapiKkey);
+    //         params = params.set('format', "json");
+    //         params = params.set('limit', 100);
+    //         this.http.get("https://rebankautionapi.onrender.com/v1/states", { params })?.subscribe({
+    //               next: (res: any) => {
+    //                 console.log("State Names fetched : ",res);
+    //                 this.stateNames = res;
+    //                 // this.stateNames = res.records.sort((a:any, b:any) =>
+    //                 //   a.stateName.localeCompare(b.stateName)
+    //                 // );  
+    //               }
+    //         })
+    this._properties.getStatesNames()?.subscribe({
+      next: (res: any) => {
+        this.stateNames = res;
+      }
+    })
   }
 
   searchForm = new FormGroup({
@@ -110,16 +117,25 @@ export class PropertiesComponent implements OnInit {
   }
 
 onStateChange(event:Event){
+  console.log("Selected State : ", this.selectedState);
     let params = new HttpParams();
-    params = params.set('api-key', environment.stateanddistrictsapiKkey);
-    params = params.set('format', "json");
-    params = params.set('limit', 100);
-    params = params.set('filters[state_name_english]', this.selectedState);
-    this.http.get(AuthEndPoints.GET_DISTRICT, { params })?.subscribe({
+    // params = params.set('api-key', environment.stateanddistrictsapiKkey);
+    // params = params.set('format', "json");
+    // params = params.set('limit', 100);
+    // console.log(this.selectedState);
+    // params = params.set('filters[state_name_english]', this.selectedState);
+    // this.http.get(AuthEndPoints.DISTRICTS.replace('{state}', this.selectedState), { params })?.subscribe({
+    //   next: (res: any) => {
+    //     console.log("District Names", res);
+    //     this.districtNames = res;
+        // this.districtNames = res.records.sort((a:any, b:any) =>
+        //   a.district_name_english.localeCompare(b.district_name_english)
+        // )
+    //   }
+    // })
+    this._properties.getDistrictsByState(this.selectedState)?.subscribe({
       next: (res: any) => {
-        this.districtNames = res.records.sort((a:any, b:any) =>
-          a.district_name_english.localeCompare(b.district_name_english)
-        )
+        this.districtNames = res;
       }
     })
   }

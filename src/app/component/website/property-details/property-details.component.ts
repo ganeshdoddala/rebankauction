@@ -59,9 +59,9 @@ export class PropertyDetailsComponent {
   }
 
   leadform = new FormGroup({
-        name: new FormControl('', Validators.required),
-        phoneNumber: new FormControl('', Validators.required),
-        email: new FormControl('', Validators.required),
-        message: new FormControl('', Validators.required),
+        name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{10,}$/)]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        message: new FormControl(''),
   })
 }

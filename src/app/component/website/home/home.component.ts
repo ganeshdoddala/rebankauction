@@ -1,6 +1,7 @@
 import {
 	Component,
-	OnInit
+	OnInit,
+	ViewChild
 } from '@angular/core';
 import {
 	Router
@@ -42,6 +43,7 @@ declare var bootstrap: any;
 	styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+	
 	allProperties: any;
 	allPropertiesTypes: any;
 	stateNames: any;
@@ -95,18 +97,11 @@ export class HomeComponent implements OnInit {
 	}
 
   getstatesNames() {
-    let params = new HttpParams();
-            params = params.set('api-key', environment.stateanddistrictsapiKkey);
-            params = params.set('format', "json");
-            params = params.set('limit', 100);
-            this.http.get(AuthEndPoints.GET_STATE, { params })?.subscribe({
-                  next: (res: any) => {
-                    console.log(res.records)
-                    this.stateNames = res.records.sort((a:any, b:any) =>
-                      a.state_name_english.localeCompare(b.state_name_english)
-                    );  
-                  }
-            })
+    this._properties.getStatesNames()?.subscribe({
+      next: (res: any) => {
+        this.stateNames = res;
+      }
+    })
   }
 
 	getPropertyTypes() {
@@ -146,21 +141,11 @@ export class HomeComponent implements OnInit {
 	})
 
 	onStateChange(event: Event) {
-		console.log(this.selectedState)
-		let params = new HttpParams();
-		params = params.set('api-key', environment.stateanddistrictsapiKkey);
-		params = params.set('format', "json");
-		params = params.set('limit', 100);
-		params = params.set('filters[state_name_english]', this.selectedState);
-		this.http.get(AuthEndPoints.GET_DISTRICT, {
-			params
-		})?.subscribe({
-			next: (res: any) => {
-				this.districtNames = res.records.sort((a: any, b: any) =>
-					a.district_name_english.localeCompare(b.district_name_english)
-				)
-			}
-		})
+		this._properties.getDistrictsByState(this.selectedState)?.subscribe({
+      next: (res: any) => {
+        this.districtNames = res;
+      }
+    })
 	}
 
 	submitForm() {

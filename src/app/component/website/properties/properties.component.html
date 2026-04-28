@@ -39,13 +39,13 @@
                                 <div class="col-md-4">
                                     <select class="form-select border-0 py-3" formControlName="state" (change)="onStateChange($event)" [(ngModel)]="selectedState">
                                         <option selected value="">Select State</option>
-                                        <option *ngFor="let state of stateNames" value="{{state.state_name_english}}">{{state.state_name_english}}</option>
+                                        <option *ngFor="let state of stateNames" value="{{state.stateCode}}">{{state.stateName}}</option>
                                     </select>
                                     </div>
                                     <div class="col-md-4">
                                     <select class="form-select border-0 py-3" formControlName="district">
                                         <option selected value="">Select District</option>
-                                        <option *ngFor="let district of districtNames" value="{{district.district_name_english}}">{{district.district_name_english}}</option>
+                                        <option *ngFor="let district of districtNames" value="{{district.districtName}}">{{district.districtName}}</option>
                                     </select>
                                     </div>
                             </div>

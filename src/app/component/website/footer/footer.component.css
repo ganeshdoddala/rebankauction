@@ -10,3 +10,65 @@ li a {
 li a:hover {
     color: #2d2e2d;
 }
+
+.subscription-form {
+    margin-top: 1rem;
+}
+
+.subscription-form .form-control,
+.subscription-form select {
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    color: #333333;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+}
+
+.subscription-form .form-control::placeholder {
+    color: #999999;
+}
+
+.subscription-form .form-control:focus,
+.subscription-form select:focus {
+    background-color: #ffffff;
+    border-color: #007bff;
+    color: #333333;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.subscription-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem;
+}
+
+.subscription-form .form-control.is-invalid,
+.subscription-form select.is-invalid {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.subscription-form .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+}
+
+.subscription-form .btn-primary:hover:not(:disabled) {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.subscription-form .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.subscription-form small {
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 0.25rem;
+}

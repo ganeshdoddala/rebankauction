@@ -1,101 +1,177 @@
-
-
-        <!-- Header Start -->
-        <div class="container-fluid header bg-white p-0 mt-3">
-            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
-                <div class="col-md-12 p-5 mt-lg-5">
-                    <h1 class="display-5 animated fadeIn mb-4">{{propertyDetails.title}}</h1> 
-                </div>
-              
-           
-                <div class="col-1"></div>
-                <div class="col-xl-10 col-lg-10 wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">
-                    <div class="cs_single_property_content_wrapper cs_white_bg cs_radius_15">
-                    <div class="cs_single_property_text_wrapper">
-                        <h3 class="cs_fs_24 cs_semibold cs_body_font cs_mb_33">Description</h3>
-                        <div class="cs_property_description position-relative">
-                        <p>{{propertyDetails.propertyDescription}}</p>
-                        </div>
-                        <div class="cs_single_property_text_wrapper cs_border_top" *ngIf="propertyDetails.saleType === 'auction'">
-                            <p><b>Action Details</b></p>
-                            <ul class="cs_property_details_list">
-                            <li><span class="cs_property_details_title">Action ID:</span> {{propertyDetails.auctionId}}</li>
-                            <li><span class="cs_property_details_title">Action Date:</span> {{propertyDetails.auctiondatetime}}</li>
-                            <li><span class="cs_property_details_title">Price:</span> {{propertyDetails.reserveprice}}</li>
-                            <li><span class="cs_property_details_title">EMD Amount:</span> {{propertyDetails.emdAmount}}</li>
-                            <li><span class="cs_property_details_title">EMD Submission:</span> {{propertyDetails.emdSubmission}}</li>
-                            <li><span class="cs_property_details_title">Bank Name:</span> {{propertyDetails.organizationName}}</li>
-                            <li><span class="cs_property_details_title">Bank Branch:</span> {{propertyDetails.organizationBranch}}</li>
-                            </ul>
-                            <p><b>Borrower Details</b></p>
-                            <ul class="cs_property_details_list">
-                            <li><span class="cs_property_details_title">Borrower Name:</span> {{propertyDetails.borrowerName}}</li>
-                            </ul>
-                            <p><b>Project Details</b></p>
-                            <ul class="cs_property_details_list">
-                            <li><span class="cs_property_details_title">Project Size:</span> {{propertyDetails.projectSize}}</li>
-                            <li><span class="cs_property_details_title">Property Type:</span> {{propertyDetails.propertyType}}</li>
-                            <li><span class="cs_property_details_title">Reserve Price:</span> {{propertyDetails.reserveprice}}</li>
-                            <li><span class="cs_property_details_title">Sale Type:</span> {{propertyDetails.saleType}}</li>
-                            </ul>
-                        </div>
-                        <div class="cs_single_property_text_wrapper cs_border_top" *ngIf="propertyDetails.saleType != 'auction'">
-                            <p><b>Seller Details</b></p>
-                            <ul class="cs_property_details_list">
-                            <li><span class="cs_property_details_title">Seller Name:</span> {{propertyDetails.borrowerName}}</li>
-                            </ul>
-                            <p><b>Project Details</b></p>
-                            <ul class="cs_property_details_list">
-                            <li><span class="cs_property_details_title">Project Size:</span> {{propertyDetails.projectSize}}</li>
-                            <li><span class="cs_property_details_title">Property Type:</span> {{propertyDetails.propertyType}}</li>
-                            <li><span class="cs_property_details_title">Reserve Price:</span> {{propertyDetails.reserveprice}}</li>
-                            </ul>
-                        </div>
-                        <hr />
-                        <!-- <button aria-label="Click to show all text" class="btn btn-primary" (click)="InterestedFormselect()">Interested</button> -->
+<!-- Property Details Section -->
+<div class="property-details-wrapper">
+    <!-- Header with Title -->
+    <div class="property-header bg-primary text-white py-5">
+        <div class="container-xl">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 mb-3">{{propertyDetails.title}}</h1>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <span class="badge bg-info fs-6">{{propertyDetails.saleType | uppercase}}</span>
+                        <span class="badge bg-success fs-6" *ngIf="propertyDetails.reserveprice">₹ {{propertyDetails.reserveprice | number}}</span>
                     </div>
-                    </div>
-                    <p *ngIf="formResponse">{{formResponse}}</p>
                 </div>
-                <div class="col-1"></div>
-                
-            <div class="row p-2">
-                <div class="col-1"></div>
-                <div class="col-xl-10 col-lg-8 wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;" *ngIf="InterestedFormVisibility">
-                    <form [formGroup]="leadform" (ngSubmit)="submitLeadForm()">
-                        <div class="row g-3">
-                                    <div class="col-md-12">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Your Name" formControlName="name">
-                                            <label for="name">Your Name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Your Email" formControlName="email">
-                                            <label for="email">Your Email</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="phone" placeholder="Your Phone" formControlName="phoneNumber">
-                                            <label for="phone">Your Phone</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px" formControlName="message"></textarea>
-                                            <label for="message">Message</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn btn-primary w-100 py-3" type="submit">Send Request</button>
-                                    </div>
-                                    
-                                </div>
-                    </form>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <button class="btn btn-light btn-lg rounded-pill me-2" *ngIf="!InterestedFormVisibility" (click)="InterestedFormselect()">
+                        <i class="fas fa-heart"></i> Interested
+                    </button>
+                    <button class="btn btn-outline-light btn-lg rounded-pill" *ngIf="InterestedFormVisibility" (click)="InterestedFormselect()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container-xl py-5">
+        <div class="row g-4">
+            <!-- Left Column - Details -->
+            <div class="col-lg-7">
+                <!-- Description Card -->
+                <div class="card shadow-sm border-0 mb-4 rounded-lg property-card">
+                    <div class="card-body p-4">
+                        <h3 class="card-title fs-5 fw-bold mb-4"><i class="fas fa-info-circle text-primary me-2"></i>Property Description</h3>
+                        <p class="card-text text-secondary lh-lg">{{propertyDetails.propertyDescription}}</p>
+                    </div>
+                </div>
+
+                <!-- Auction Details Card -->
+                <div class="card shadow-sm border-0 mb-4 rounded-lg property-card" *ngIf="propertyDetails.saleType === 'auction'">
+                    <div class="card-body p-4">
+                        <h3 class="card-title fs-5 fw-bold mb-4"><i class="fas fa-gavel text-primary me-2"></i>Auction Details</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <label class="detail-label">Auction ID</label>
+                                <span class="detail-value">{{propertyDetails.auctionId}}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label class="detail-label">Auction Date</label>
+                                <span class="detail-value">{{propertyDetails.auctiondatetime | date: 'dd MMM yyyy'}}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label class="detail-label">Reserve Price</label>
+                                <span class="detail-value fw-bold text-success">₹ {{propertyDetails.reserveprice | number}}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label class="detail-label">EMD Amount</label>
+                                <span class="detail-value">₹ {{propertyDetails.emdAmount | number}}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label class="detail-label">EMD Submission</label>
+                                <span class="detail-value">{{propertyDetails.emdSubmission}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Borrower Details Card (Auction) -->
+                <div class="card shadow-sm border-0 mb-4 rounded-lg property-card" *ngIf="propertyDetails.saleType === 'auction'">
+                    <div class="card-body p-4">
+                        <h3 class="card-title fs-5 fw-bold mb-4"><i class="fas fa-user text-primary me-2"></i>Borrower Details</h3>
+                        <div class="detail-item">
+                            <label class="detail-label">Borrower Name</label>
+                            <span class="detail-value">{{propertyDetails.borrowerName}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bank Details Card -->
+                <div class="card shadow-sm border-0 mb-4 rounded-lg property-card" *ngIf="propertyDetails.saleType === 'auction'">
+                    <div class="card-body p-4">
+                        <h3 class="card-title fs-5 fw-bold mb-4"><i class="fas fa-university text-primary me-2"></i>Bank Details</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <label class="detail-label">Bank Name</label>
+                                <span class="detail-value">{{propertyDetails.organizationName}}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label class="detail-label">Branch</label>
+                                <span class="detail-value">{{propertyDetails.organizationBranch}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seller Details Card (Non-Auction) -->
+                <div class="card shadow-sm border-0 mb-4 rounded-lg property-card" *ngIf="propertyDetails.saleType != 'auction'">
+                    <div class="card-body p-4">
+                        <h3 class="card-title fs-5 fw-bold mb-4"><i class="fas fa-user-tie text-primary me-2"></i>Seller Details</h3>
+                        <div class="detail-item">
+                            <label class="detail-label">Seller Name</label>
+                            <span class="detail-value">{{propertyDetails.borrowerName}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Details Card -->
+                <div class="card shadow-sm border-0 rounded-lg property-card">
+                    <div class="card-body p-4">
+                        <h3 class="card-title fs-5 fw-bold mb-4"><i class="fas fa-building text-primary me-2"></i>Project Details</h3>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <label class="detail-label">Project Size</label>
+                                <span class="detail-value">{{propertyDetails.projectSize}}</span>
+                            </div>
+                            <div class="detail-item">
+                                <label class="detail-label">Property Type</label>
+                                <span class="detail-value">{{propertyDetails.propertyType}}</span>
+                            </div>
+                            <div class="detail-item" *ngIf="propertyDetails.saleType === 'auction'">
+                                <label class="detail-label">Sale Type</label>
+                                <span class="detail-value badge bg-warning text-dark">{{propertyDetails.saleType}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Response Message -->
+                <div class="alert alert-success alert-dismissible fade show mt-4" role="alert" *ngIf="formResponse">
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Success!</strong> {{formResponse}}
+                    <button type="button" class="btn-close" (click)="formResponse = null"></button>
+                </div>
+            </div>
+
+            <!-- Right Column - Interest Form -->
+            <div class="col-lg-5" *ngIf="InterestedFormVisibility">
+                <div class="card shadow-lg border-0 rounded-lg sticky-form">
+                    <div class="card-body p-4">
+                        <h4 class="card-title mb-4 fw-bold">
+                            <i class="fas fa-envelope text-primary me-2"></i>Express Your Interest
+                        </h4>
+                        <form [formGroup]="leadform" (ngSubmit)="submitLeadForm()">
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-500">Full Name *</label>
+                                <input type="text" class="form-control form-control-lg" id="name" placeholder="Enter your name" formControlName="name" [class.is-invalid]="leadform.get('name')?.touched && leadform.get('name')?.invalid">
+                                <small class="text-danger d-block mt-1" *ngIf="leadform.get('name')?.touched && leadform.get('name')?.invalid">Name is required</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-500">Email Address *</label>
+                                <input type="email" class="form-control form-control-lg" id="email" placeholder="your.email@example.com" formControlName="email" [class.is-invalid]="leadform.get('email')?.touched && leadform.get('email')?.invalid">
+                                <small class="text-danger d-block mt-1" *ngIf="leadform.get('email')?.touched && leadform.get('email')?.invalid">Valid email is required</small>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label fw-500">Phone Number *</label>
+                                <input type="tel" class="form-control form-control-lg" id="phone" placeholder="+91 98765 43210" formControlName="phoneNumber" [class.is-invalid]="leadform.get('phoneNumber')?.touched && leadform.get('phoneNumber')?.invalid">
+                                <small class="text-danger d-block mt-1" *ngIf="leadform.get('phoneNumber')?.touched && leadform.get('phoneNumber')?.invalid">Phone number is required</small>
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="form-label fw-500">Message</label>
+                                <textarea class="form-control form-control-lg" id="message" rows="5" placeholder="Tell us why you're interested..." formControlName="message"></textarea>
+                                <small class="text-muted">Additional details help us serve you better</small>
+                            </div>
+                            <button class="btn btn-primary btn-lg w-100 rounded-pill fw-bold" type="submit" [disabled]="leadform.invalid">
+                                <i class="fas fa-paper-plane me-2"></i>Send Request
+                            </button>
+                        </form>
+                        <p class="text-muted text-center mt-4 small">
+                            <i class="fas fa-clock me-1"></i> We'll respond within 24 hours
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
         <!-- Header End --> 

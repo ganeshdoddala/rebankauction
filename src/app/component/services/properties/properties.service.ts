@@ -16,12 +16,34 @@ export class PropertiesService {
         ApiMethod.GET,
       );
   }
+  getStatesNames(): Observable<any> | undefined {
+    return this._http.requestCall(
+        AuthEndPoints.STATES,
+        ApiMethod.GET,
+      );
+  }
+  
   getPropertyTypes(): Observable<any> | undefined {
     return this._http.requestCall(
         AuthEndPoints.PROPERY_TYPES,
         ApiMethod.GET,
       );
   }
+
+  getStates(): Observable<any> | undefined {
+    return this._http.requestCall(
+        AuthEndPoints.STATE,
+        ApiMethod.GET,
+      );
+  }
+
+  getDistrictsByState(state: string): Observable<any> | undefined {
+    return this._http.requestCall(
+        formatEndpoint(AuthEndPoints.DISTRICTS, state),
+        ApiMethod.GET
+      );
+  }
+
   getAuctionProperties(payload:any): Observable<any> | undefined {
     return this._http.requestCall(
         AuthEndPoints.AUCTION_PROPERTIES,

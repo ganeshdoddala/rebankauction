@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent, SafeDatePipe } from './app.component';
@@ -13,16 +14,18 @@ import { PropertiesComponent } from './component/website/properties/properties.c
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { GALLERY_CONFIG, GalleryComponent, GalleryModule } from  'ng-gallery';
+import { GALLERY_CONFIG, GalleryModule } from  'ng-gallery';
 import { LIGHTBOX_CONFIG, LightboxModule } from  'ng-gallery/lightbox';
-import { config } from 'rxjs';
 import { LightgalleryModule } from 'lightgallery/angular';
 import { PropertyDetailsComponent } from './component/website/property-details/property-details.component';
 import { ForgotPasswordComponent } from './component/agent/forgotPassword/forgotPassword.component';
+import { VisitorPopupComponent } from './component/website/home/visitor-popup/visitor-popup.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SafeDatePipe,
     LoginComponent,
     HomeComponent,
     AboutComponent,
@@ -31,8 +34,8 @@ import { ForgotPasswordComponent } from './component/agent/forgotPassword/forgot
     HeaderComponent,
     PropertiesComponent,
     PropertyDetailsComponent,
-    SafeDatePipe,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    VisitorPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { ForgotPasswordComponent } from './component/agent/forgotPassword/forgot
     HttpClientModule,
     LightboxModule,
     GalleryModule,
-    LightgalleryModule
+    LightgalleryModule,
+    ToastrModule.forRoot()
   ],
   providers:[
     {
@@ -53,7 +57,7 @@ import { ForgotPasswordComponent } from './component/agent/forgotPassword/forgot
       }
     }
   ],
-  exports: [SafeDatePipe],
+  exports: [SafeDatePipe, ReactiveFormsModule, FormsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

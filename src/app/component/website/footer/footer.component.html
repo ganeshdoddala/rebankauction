@@ -1,7 +1,7 @@
 <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container py-5">
                 <div class="row g-5">
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <h5 class="text-white mb-4">Get In Touch</h5>
                         <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>RT nagar Bangalore 560032,</p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 82771 33999</p>
@@ -13,13 +13,103 @@
                             <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <h5 class="text-white mb-4">Quick Links</h5>
                         <a class="btn btn-link text-white-50" href="">About Us</a>
                         <a class="btn btn-link text-white-50" href="">Contact Us</a>
                         <a class="btn btn-link text-white-50" href="">Our Services</a>
                         <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
                         <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <h5 class="text-white mb-4">Subscribe to Our Newsletter</h5>
+                        <div *ngIf="isLoadingForm" class="text-center">
+                            <small class="text-white-50">Loading form...</small>
+                        </div>
+                        <form *ngIf="!isLoadingForm" [formGroup]="subscriptionForm" (ngSubmit)="submit()" class="subscription-form">
+                            <div *ngFor="let field of formFields" class="mb-3">
+                                <!-- Text Input -->
+                                <ng-container *ngIf="field.type === 'text' || field.type === 'email'">
+                                    <input 
+                                        [type]="field.type" 
+                                        class="form-control" 
+                                        [placeholder]="field.label" 
+                                        [formControlName]="field.name"
+                                        [class.is-invalid]="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.invalid">
+                                    <small class="text-danger d-block" *ngIf="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.errors?.['required']">
+                                        {{ field.label }} is required
+                                    </small>
+                                    <small class="text-danger d-block" *ngIf="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.errors?.['minlength']">
+                                        {{ field.label }} must be at least {{ field.minLength }} characters
+                                    </small>
+                                    <small class="text-danger d-block" *ngIf="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.errors?.['email']">
+                                        Please enter a valid email
+                                    </small>
+                                </ng-container>
+
+                                <!-- Select Dropdown -->
+                                <ng-container *ngIf="field.type === 'select'">
+                                    <select 
+                                        class="form-control" 
+                                        [formControlName]="field.name"
+                                        [class.is-invalid]="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.invalid">
+                                        <option value="">Select {{ field.label }}</option>
+                                        <option *ngFor="let option of (field.options || locations)" [value]="option">{{ option }}</option>
+                                    </select>
+                                    <small class="text-danger d-block" *ngIf="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.invalid">
+                                        {{ field.label }} is required
+                                    </small>
+                                </ng-container>
+
+                                <!-- Textarea -->
+                                <ng-container *ngIf="field.type === 'textarea'">
+                                    <textarea 
+                                        class="form-control" 
+                                        [placeholder]="field.label" 
+                                        [formControlName]="field.name"
+                                        [rows]="field.rows || 3"
+                                        [class.is-invalid]="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.invalid"></textarea>
+                                    <small class="text-danger d-block" *ngIf="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.errors?.['required']">
+                                        {{ field.label }} is required
+                                    </small>
+                                </ng-container>
+
+                                <!-- Checkbox -->
+                                <ng-container *ngIf="field.type === 'checkbox'">
+                                    <div class="form-check">
+                                        <input 
+                                            type="checkbox" 
+                                            class="form-check-input" 
+                                            [id]="field.name" 
+                                            [formControlName]="field.name">
+                                        <label class="form-check-label text-white-50" [for]="field.name">
+                                            {{ field.label }}
+                                        </label>
+                                    </div>
+                                    <small class="text-danger d-block" *ngIf="subscriptionForm.get(field.name)?.touched && subscriptionForm.get(field.name)?.invalid">
+                                        {{ field.label }} is required
+                                    </small>
+                                </ng-container>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-primary" 
+                                    [disabled]="isSubmitting || subscriptionForm.invalid">
+                                    {{ isSubmitting ? 'Subscribing...' : 'Subscribe' }}
+                                </button>
+                            </div>
+                            <div class="mt-2" *ngIf="subscriptionMessage">
+                                <small [ngClass]="{
+                                    'text-success': subscriptionMessageType === 'success',
+                                    'text-danger': subscriptionMessageType === 'error',
+                                    'text-info': subscriptionMessageType === 'info'
+                                }">
+                                    {{ subscriptionMessage }}
+                                </small>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

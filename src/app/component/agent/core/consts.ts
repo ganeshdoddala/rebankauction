@@ -30,12 +30,16 @@ export enum AuthEndPoints {
   PROPERY_TYPE_COUNT ='v1/property-type-count',
   PROPERY_TYPES ='v1/property-types',
   STATE = 'v1/listStates',
+  DISTRICTS = 'v1/districts/state/{0}',
   PROPERTIES_QUERY = 'v1/properties/query',
   CONTACT_FORM='v1/contactForm',
   ENQUIRY_FORM='v1/enquiryForm',
+  VISITOR_ENQUIRY='v1/enquiryForm',
   GET_STATE = 'https://api.data.gov.in/resource/a71e60f0-a21d-43de-a6c5-fa5d21600cdb',
   GET_DISTRICT='https://api.data.gov.in/resource/37231365-78ba-44d5-ac22-3deec40b9197',
   UPLOAD_BULKPROPERTIES='v1/bulkUpload',
   DELETE_AGENT='v1/agent/delete/{0}',
-  FORGOT_PASSWORD='v1/forgot-password'
+  FORGOT_PASSWORD='v1/forgot-password',
+  SUBSCRIBE='v1/subscriptions',
+  STATES='v1/states'
 }
